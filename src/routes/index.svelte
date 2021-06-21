@@ -21,8 +21,7 @@
       <NavLink
         class="px-2"
         href="https://github.com/Lifeni/boring-management-system"
-        rel="noreferrer"
-        target="_blank"
+        rel="external"
       >
         <Button color="primary" outline>GitHub</Button>
       </NavLink>
