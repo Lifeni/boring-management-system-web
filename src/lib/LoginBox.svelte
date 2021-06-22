@@ -1,5 +1,5 @@
 <script>
-  import { Button, Form, Input, Spinner } from 'sveltestrap'
+  import { Button, Form, Input, Nav, NavItem, NavLink, Spinner } from 'sveltestrap'
 
   let username = ''
   let password = ''
@@ -38,11 +38,7 @@
   }
 </script>
 
-<svelte:head>
-  <title>登录 | 一个教务管理系统</title>
-</svelte:head>
-
-<Form on:submit={handleLogin} class="d-grid p-4 gap-3 border rounded">
+<Form on:submit={handleLogin} class="d-grid p-4 gap-3 border rounded bg-white">
   <h1 class="fs-5 text-center">登录</h1>
   <Input
     id="username"
