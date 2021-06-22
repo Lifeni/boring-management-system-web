@@ -1,35 +1,32 @@
 <script>
   import LoginBox from '$lib/LoginBox.svelte'
-  import { Button, Nav, NavItem, NavLink } from 'sveltestrap'
+  import { onDestroy } from 'svelte'
+  import { user } from '../stores'
 
-  let logged = false
+  let isLogged
+  let userInfo
+
+  const unsubscribe = user.subscribe((value) => {
+    isLogged = value.isLogged
+    userInfo = value.userInfo
+    console.log(value)
+  })
+
+  onDestroy(() => {
+    unsubscribe()
+  })
 </script>
 
 <svelte:head>
-  {#if logged}
+  {#if isLogged}
     <title>一个教务管理系统</title>
   {:else}
     <title>登录 | 一个教务管理系统</title>
   {/if}
 </svelte:head>
 
-{#if logged}
-  <Nav>
-    <NavItem>
-      <NavLink class="px-2" href="/login">
-        <Button color="primary">登录</Button>
-      </NavLink>
-    </NavItem>
-    <NavItem>
-      <NavLink
-        class="px-2"
-        href="https://github.com/Lifeni/boring-management-system"
-        rel="external"
-      >
-        <Button color="primary" outline>GitHub</Button>
-      </NavLink>
-    </NavItem>
-  </Nav>
+{#if isLogged}
+  <h1>ID: {userInfo.id}</h1>
 {:else}
   <main class="h-100 d-flex flex-md-row flex-column justify-content-evenly align-items-center">
     <section class="text-center">
