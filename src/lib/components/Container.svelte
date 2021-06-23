@@ -5,14 +5,13 @@
 </script>
 
 {#if isLogged}
-  <Container fluid>
+  <Container fluid class="d-flex flex-column h-100">
     <Row>
       <Col><Header /></Col>
     </Row>
-    <Row class="pt-5">
-      <!-- <Col xs="3"><Nav /></Col> -->
+    <Row class="flex-fill pt-5">
       <Col>
-        <main class="w-100 border rounded">
+        <main class="w-100 h-100">
           <slot />
         </main>
       </Col>

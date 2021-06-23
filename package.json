@@ -30,6 +30,7 @@
   "dependencies": {
     "bootstrap": "^5.0.2",
     "bootstrap-icons": "^1.5.0",
+    "pattern.css": "^1.0.0",
     "sveltestrap": "^5.2.1"
   }
 }

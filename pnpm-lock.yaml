@@ -10,6 +10,7 @@ specifiers:
   eslint: ^7.29.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^3.2.0
+  pattern.css: ^1.0.0
   prettier: ~2.3.1
   prettier-plugin-svelte: ^2.3.1
   svelte: ^3.38.3
@@ -22,6 +23,7 @@ specifiers:
 dependencies:
   bootstrap: 5.0.2
   bootstrap-icons: 1.5.0
+  pattern.css: 1.0.0
   sveltestrap: 5.2.1_svelte@3.38.3
 
 devDependencies:
@@ -1040,6 +1042,10 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
     dev: true
+
+  /pattern.css/1.0.0:
+    resolution: {integrity: sha512-2bW2rCCdLGgvJPpiSJGrg44onxRWTMQpn6tooAayomsCHiso3nehlp5OugNYHSXxYuFfQ1vtDXtGbq6H206qLw==}
+    dev: false
 
   /picomatch/2.3.0:
     resolution: {integrity: sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==}

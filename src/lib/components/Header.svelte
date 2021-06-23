@@ -27,9 +27,9 @@
   }
 </script>
 
-<header class="d-flex align-items-center justify-content-between w-100">
+<header class="d-flex py-2 align-items-center justify-content-between w-100">
   <Nav pills class="d-flex align-items-center">
-    <h1 class="fs-4 m-0 pe-5">一个教务管理系统</h1>
+    <h1 class="fs-5 m-0 pe-5">一个教务管理系统</h1>
     {#each featureMap($userInfo.role) as feature}
       <NavItem>
         {#if isCurrentPage(feature.url)}
@@ -45,7 +45,7 @@
     {/each}
   </Nav>
   <Dropdown>
-    <DropdownToggle caret outline color="primary">
+    <DropdownToggle caret color="primary">
       <Icon name="person-circle" class="align-middle pe-2" />
       <span class="align-middle">{$userInfo.name}</span>
     </DropdownToggle>
