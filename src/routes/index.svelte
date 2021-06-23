@@ -1,4 +1,5 @@
 <script>
+  import Container from '$lib/Container.svelte'
   import LoginBox from '$lib/LoginBox.svelte'
   import { onDestroy } from 'svelte'
   import { user } from '../utils/stores'
@@ -25,7 +26,9 @@
 </svelte:head>
 
 {#if isLogged}
-  <h1>ID: {userInfo.id}</h1>
+  <Container>
+    <h1>ID: {userInfo.id}</h1>
+  </Container>
 {:else}
   <main class="h-100 d-flex flex-md-row flex-column justify-content-evenly align-items-center">
     <section class="text-center">
