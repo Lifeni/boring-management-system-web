@@ -38,7 +38,7 @@
 </script>
 
 <Form on:submit={handleLogin} class="d-grid p-4 gap-3 border rounded bg-white">
-  <h1 class="fs-5 text-center">登录</h1>
+  <h1 class="fs-5 text-center fw-light">登录</h1>
   <Input
     id="username"
     name="username"
@@ -49,6 +49,7 @@
     autocomplete="off"
     bind:value={username}
     on:input={clearStatus}
+    class="fw-light"
   />
   <Input
     id="password"
@@ -59,14 +60,15 @@
     autocomplete="current-password"
     bind:value={password}
     on:input={clearStatus}
+    class="fw-light"
   />
   {#if status === 'waiting'}
-    <Button type="submit" block color="primary">登录</Button>
+    <Button type="submit" block color="primary" class="fw-light">登录</Button>
   {:else if status === 'loading'}
     <Button type="button" disabled block color="primary">
       <Spinner size="sm" />
     </Button>
   {:else if status === 'error'}
-    <Button type="button" block color="danger">登录失败</Button>
+    <Button type="button" block color="danger" class="fw-light">登录失败</Button>
   {/if}
 </Form>

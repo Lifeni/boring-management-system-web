@@ -1,4 +1,4 @@
 import { writable } from 'svelte/store'
-import { User } from './models'
+import { userModel } from './models'
 
-export const user = writable(User)
+export const user = writable(userModel)

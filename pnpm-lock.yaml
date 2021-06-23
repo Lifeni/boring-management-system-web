@@ -6,6 +6,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^4.28.0
   '@typescript-eslint/parser': ^4.28.0
   bootstrap: ^5.0.2
+  bootstrap-icons: ^1.5.0
   eslint: ^7.29.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^3.2.0
@@ -20,6 +21,7 @@ specifiers:
 
 dependencies:
   bootstrap: 5.0.2
+  bootstrap-icons: 1.5.0
   sveltestrap: 5.2.1_svelte@3.38.3
 
 devDependencies:
@@ -359,6 +361,11 @@ packages:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
     dev: true
+
+  /bootstrap-icons/1.5.0:
+    resolution: {integrity: sha512-44feMc7DE1Ccpsas/1wioN8ewFJNquvi5FewA06wLnqct7CwMdGDVy41ieHaacogzDqLfG8nADIvMNp9e4bfbA==}
+    engines: {node: '>=10'}
+    dev: false
 
   /bootstrap/5.0.2:
     resolution: {integrity: sha512-1Ge963tyEQWJJ+8qtXFU6wgmAVj9gweEjibUdbmcCEYsn38tVwRk8107rk2vzt6cfQcRr3SlZ8aQBqaD8aqf+Q==}

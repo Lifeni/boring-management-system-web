@@ -26,15 +26,13 @@
 </svelte:head>
 
 {#if isLogged}
-  <Container>
-    <h1>ID: {userInfo.id}</h1>
-  </Container>
+  <Container>Test</Container>
 {:else}
   <main class="h-100 d-flex flex-md-row flex-column justify-content-evenly align-items-center">
     <section class="text-center">
-      <h1 class="fs-3">一个教务管理系统</h1>
+      <h1 class="fs-3 fw-light">一个教务管理系统</h1>
       <p class="fs-5 mb-3">
-        <code>boring-management-system</code>
+        <code class="fw-lighter">boring-management-system</code>
       </p>
     </section>
     <LoginBox />

@@ -14,6 +14,10 @@ interface LoginRequest {
   password: string
 }
 
+interface LogoutRequest {
+  id: number
+}
+
 interface LoginResponse {
   userId: number
   role: number
