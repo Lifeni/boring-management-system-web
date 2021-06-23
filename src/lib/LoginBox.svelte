@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { Button, Form, Input, Spinner } from 'sveltestrap'
   import { post } from '../utils/fetch'
   import { user } from '../utils/stores'
@@ -7,11 +7,11 @@
   let password = ''
   let status = 'waiting'
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: Event) => {
     e.preventDefault()
 
     status = 'loading'
-    post('/api/auth/login', {
+    post<LoginRequest, IDataMessage<LoginResponse>>('/api/auth/login', {
       username: username,
       password: password
     })
@@ -19,7 +19,7 @@
       .catch(() => (status = 'error'))
   }
 
-  const setUserInfo = (data) => {
+  const setUserInfo = (data: LoginResponse) => {
     user.set({
       isLogged: true,
       userInfo: {

@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
   import Container from '$lib/Container.svelte'
   import LoginBox from '$lib/LoginBox.svelte'
   import { onDestroy } from 'svelte'
   import { user } from '../utils/stores'
 
-  let isLogged
-  let userInfo
+  let isLogged: boolean
+  let userInfo: UserInfo
 
   const unsubscribe = user.subscribe((value) => {
     isLogged = value.isLogged

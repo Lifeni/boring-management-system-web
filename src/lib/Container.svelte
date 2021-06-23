@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { Col, Container, Row } from 'sveltestrap'
   import Header from './Header.svelte'
   import Nav from './Nav.svelte'

@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
   import { onDestroy, onMount } from 'svelte'
   import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'sveltestrap'
   import { user } from '../utils/stores'
 
-  let isLogged
-  let userInfo
+  let isLogged: boolean
+  let userInfo: UserInfo
 
   const unsubscribe = user.subscribe((value) => {
     isLogged = value.isLogged
