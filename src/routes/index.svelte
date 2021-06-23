@@ -25,7 +25,7 @@
 
 {#if $isLogged}
   <Container>
-    <div class="p-5 h-100 d-flex flex-column">
+    <div class="p-5 pb-4 h-100 d-flex flex-column">
       <h2 class="fs-1">欢迎回来，{$userInfo.name}</h2>
       <h3 class="fs-3 pt-3 pb-5">今天是 {getDate()}</h3>
       <section class="mt-5 flex-fill d-flex align-items-end">
@@ -37,7 +37,7 @@
 {:else}
   <main class="h-100 d-flex justify-content-evenly align-items-center">
     <section class="text-center">
-      <h1 class="fs-3">一个教务管理系统</h1>
+      <h1 class="fs-2">一个教务管理系统</h1>
       <p class="fs-5 mb-3">
         <code>boring-management-system</code>
       </p>
@@ -48,11 +48,11 @@
 
 <style>
   .pattern {
-    position: fixed;
-    right: 0;
+    position: absolute;
+    right: -3.5rem;
     bottom: 0;
     z-index: -1;
-    width: 42vw;
+    width: 42%;
     height: 100vh;
     color: #f6f8fa;
   }

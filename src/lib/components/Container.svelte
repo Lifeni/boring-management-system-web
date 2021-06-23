@@ -11,7 +11,7 @@
     </Row>
     <Row class="flex-fill pt-5">
       <Col>
-        <main class="w-100 h-100">
+        <main class="position-relative w-100 h-100">
           <slot />
         </main>
       </Col>

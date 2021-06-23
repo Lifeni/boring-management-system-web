@@ -19,7 +19,7 @@
   const isCurrentPage = (url: string) => url === decodeURIComponent(path)
 
   const handleLogout = () => {
-    post<LogoutRequest, IBaseMessage>('/api/auth/logout', { id: $userInfo.id }).finally(() => {
+    post<ILogoutRequest, IBaseMessage>('/api/auth/logout', { id: $userInfo.id }).finally(() => {
       isLogged.set(false)
       userInfo.set(userModel)
       goto('/')
@@ -45,7 +45,7 @@
     {/each}
   </Nav>
   <Dropdown>
-    <DropdownToggle caret color="primary">
+    <DropdownToggle caret outline color="primary">
       <Icon name="person-circle" class="align-middle pe-2" />
       <span class="align-middle">{$userInfo.name}</span>
     </DropdownToggle>

@@ -9,20 +9,27 @@ interface IDataMessage<T> {
   data: T
 }
 
-interface LoginRequest {
+interface ILoginRequest {
   username: string
   password: string
 }
 
-interface LogoutRequest {
-  id: number
-}
-
-interface LoginResponse {
+interface ILoginResponse {
   userId: number
   role: number
   userName: string
 }
+
+interface ILogoutRequest {
+  id: number
+}
+
+interface IResetPasswordRequest {
+  userId: number
+  oldPassword: string
+  newPassword: string
+}
+
 type UserInfo = {
   name: string
   id: number

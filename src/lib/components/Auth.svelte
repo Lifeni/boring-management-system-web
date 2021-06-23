@@ -1,8 +1,9 @@
 <script lang="ts">
+  import { browser } from '$app/env'
   import { goto } from '$app/navigation'
   import { isLogged } from '$lib/utils/stores'
 
-  if (!$isLogged) {
+  if (browser && !$isLogged) {
     goto('/')
   }
 </script>

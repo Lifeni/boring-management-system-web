@@ -11,7 +11,7 @@
     e.preventDefault()
 
     status = 'loading'
-    post<LoginRequest, IDataMessage<LoginResponse>>('/api/auth/login', {
+    post<ILoginRequest, IDataMessage<ILoginResponse>>('/api/auth/login', {
       username: username,
       password: password
     })
@@ -19,7 +19,7 @@
       .catch(() => (status = 'error'))
   }
 
-  const setUserInfo = (data: LoginResponse) => {
+  const setUserInfo = (data: ILoginResponse) => {
     isLogged.set(true)
     userInfo.set({
       id: data.userId,
