@@ -23,14 +23,13 @@ interface LoginResponse {
   role: number
   userName: string
 }
-
-type User = {
-  isLogged: boolean
-  userInfo: UserInfo
-}
-
 type UserInfo = {
   name: string
   id: number
   role: number
+}
+
+type FeatureItem = {
+  name: string
+  url: string
 }
