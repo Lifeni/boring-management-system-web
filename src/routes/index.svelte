@@ -1,7 +1,7 @@
 <script>
   import LoginBox from '$lib/LoginBox.svelte'
   import { onDestroy } from 'svelte'
-  import { user } from '../stores'
+  import { user } from '../utils/stores'
 
   let isLogged
   let userInfo
@@ -9,7 +9,6 @@
   const unsubscribe = user.subscribe((value) => {
     isLogged = value.isLogged
     userInfo = value.userInfo
-    console.log(value)
   })
 
   onDestroy(() => {

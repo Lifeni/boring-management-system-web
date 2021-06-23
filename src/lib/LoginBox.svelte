@@ -1,6 +1,7 @@
 <script>
   import { Button, Form, Input, Spinner } from 'sveltestrap'
-  import { user } from '../stores'
+  import { post } from '../utils/fetch'
+  import { user } from '../utils/stores'
 
   let username = ''
   let password = ''
@@ -10,30 +11,23 @@
     e.preventDefault()
 
     status = 'loading'
-
-    fetch('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        username: username,
-        password: password
-      }),
-      headers: { 'content-type': 'application/json' }
+    post('/api/auth/login', {
+      username: username,
+      password: password
     })
-      .then(async (res) => {
-        if (res.ok) {
-          const data = (await res.json()).data
-          user.set({
-            isLogged: true,
-            userInfo: { id: data.userId, role: data.role }
-          })
-        } else {
-          status = 'error'
-        }
-      })
-      .catch((err) => {
-        console.error(err)
-        status = 'error'
-      })
+      .then((res) => setUserInfo(res.data))
+      .catch(() => (status = 'error'))
+  }
+
+  const setUserInfo = (data) => {
+    user.set({
+      isLogged: true,
+      userInfo: {
+        id: data.userId,
+        role: data.role,
+        name: data.userName
+      }
+    })
   }
 
   const clearStatus = () => {
