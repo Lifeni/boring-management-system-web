@@ -43,3 +43,10 @@ body {
   justify-content: center;
   background-color: #fff;
 }
+
+.global-toast {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 2000;
+}

@@ -3,3 +3,9 @@ export const userModel: UserInfo = {
   id: null,
   role: null
 }
+
+export const toastModel: Toast = {
+  title: '',
+  body: '',
+  isOpen: false
+}

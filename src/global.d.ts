@@ -36,6 +36,12 @@ type UserInfo = {
   role: number
 }
 
+type Toast = {
+  title: string
+  body: string
+  isOpen: boolean
+}
+
 type RouterItem = {
   name: string
   url: string

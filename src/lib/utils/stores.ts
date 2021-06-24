@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { userModel } from './models'
+import { toastModel, userModel } from './models'
 
 const createIsLogged = () => {
   const { subscribe, set } = writable(false)
@@ -29,3 +29,15 @@ const createUserInfo = () => {
 }
 
 export const userInfo = createUserInfo()
+
+const createToast = () => {
+  const { subscribe, set } = writable(toastModel)
+
+  return {
+    subscribe,
+    open: (data: Toast) => set(data),
+    close: () => set(toastModel)
+  }
+}
+
+export const toast = createToast()

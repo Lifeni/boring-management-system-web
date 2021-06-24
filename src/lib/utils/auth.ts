@@ -1,6 +1,6 @@
 import { goto } from '$app/navigation'
 import { get } from './fetch'
-import { isLogged, userInfo } from './stores'
+import { isLogged, toast, userInfo } from './stores'
 
 export const checkAuth = async (): Promise<boolean> =>
   get<IDataMessage<IUserResponse>>('/api/auth/')
@@ -13,5 +13,10 @@ export const checkAuth = async (): Promise<boolean> =>
       isLogged.logout()
       userInfo.logout()
       goto('/登录')
+      toast.open({
+        title: '发生了什么？',
+        body: '不用担心，只是登录失效了，再来一次就好了',
+        isOpen: true
+      })
       return false
     })

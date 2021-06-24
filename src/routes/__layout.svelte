@@ -1,5 +1,6 @@
 <script lang="ts">
   import { checkAuth } from '$lib/utils/auth'
+  import { isLogged } from '$lib/utils/stores'
   import 'bootstrap-icons/font/bootstrap-icons.css'
   import 'bootstrap/dist/css/bootstrap.min.css'
   import 'pattern.css/dist/pattern.min.css'
@@ -14,7 +15,7 @@
   })
 </script>
 
-{#if isLoading}
+{#if !isLogged || isLoading}
   <div class="loading-screen" out:fade>
     <Spinner color="primary" class="mt-4 mb-2" />
     <p class="fs-6 py-2 text-muted">正在加载</p>
