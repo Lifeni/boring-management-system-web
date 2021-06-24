@@ -33,7 +33,7 @@
 </script>
 
 <header class="d-flex py-2 align-items-center justify-content-between w-100">
-  <Nav pills class="d-flex align-items-center">
+  <Nav pills class="d-flex flex-fill align-items-center">
     <h1 class="fs-5 m-0 pe-5">一个教务管理系统</h1>
     {#each getRouter($userInfo.role) as router}
       <NavItem>
@@ -48,6 +48,15 @@
         {/if}
       </NavItem>
     {/each}
+    <NavItem class="mx-1">
+      <NavLink
+        href="https://github.com/Lifeni/boring-management-system"
+        target="_blank"
+        rel="external"
+      >
+        <Icon name="github" />
+      </NavLink>
+    </NavItem>
   </Nav>
   <Dropdown>
     <DropdownToggle caret outline color="primary">

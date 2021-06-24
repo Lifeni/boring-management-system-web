@@ -18,10 +18,12 @@ body {
   font-size: 0.875rem !important;
 }
 
+.nav-link .btn-outline-primary,
 .dropdown .btn-outline-primary {
   background-color: #fff;
 }
 
+.nav-link .btn-outline-primary:hover,
 .dropdown .btn-outline-primary:hover {
   color: #fff;
   background-color: #0d6efd;
