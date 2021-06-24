@@ -1,6 +1,6 @@
 <script lang="ts">
   import { isLogged } from '$lib/stores/writable'
-  import { checkAuth } from '$lib/utils/auth'
+  import { checkAuth } from '$lib/utils/check-auth'
   import 'bootstrap-icons/font/bootstrap-icons.css'
   import 'bootstrap/dist/css/bootstrap.min.css'
   import 'gridjs/dist/theme/mermaid.css'

@@ -35,6 +35,16 @@ body {
   z-index: 2000;
 }
 
+.global-modals {
+  z-index: 1800;
+  width: 100vw;
+  height: 100%;
+  margin: 0 auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .header-text {
   min-width: 13rem;
   text-align: center;

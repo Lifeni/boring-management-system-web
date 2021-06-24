@@ -42,6 +42,19 @@ type Toast = {
   isOpen: boolean
 }
 
+type Modals = {
+  title: string
+  body: string
+  size?: string
+  action: () => void
+  actionText?: string
+  actionType?: ButtonColor
+  hasInput?: boolean
+  inputType?: InputType
+  inputPlaceholder?: string
+  isOpen: boolean
+}
+
 type NavItem = {
   name: string
   url: string

@@ -9,3 +9,16 @@ export const toastModel: Toast = {
   body: '',
   isOpen: false
 }
+
+export const modalsModel: Modals = {
+  title: '',
+  body: '',
+  size: '',
+  action: () => console.log('Modals'),
+  actionText: '确定',
+  actionType: 'primary',
+  hasInput: false,
+  inputType: 'text',
+  inputPlaceholder: '',
+  isOpen: false
+}

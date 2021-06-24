@@ -26,13 +26,18 @@
 }
 
 .gridjs.gridjs-container {
-  font-size: 0.875rem !important;
+  font-size: 1rem !important;
 }
 
 .gridjs-search input {
-  font-size: 0.875rem !important;
+  font-size: 1rem !important;
+  padding: 0.5rem 0.75rem !important;
 }
 
 .gridjs .gridjs-head {
   padding: 0.5rem 1px;
+}
+
+.gridjs .gridjs-th {
+  background-clip: padding-box;
 }

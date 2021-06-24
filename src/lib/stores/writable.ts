@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { toastModel, userModel } from './models'
+import { modalsModel, toastModel, userModel } from './models'
 
 const createIsLogged = () => {
   const { subscribe, set } = writable(false)
@@ -41,5 +41,17 @@ const createToast = () => {
 }
 
 export const toast = createToast()
+
+const createModals = () => {
+  const { subscribe, set } = writable(modalsModel)
+
+  return {
+    subscribe,
+    open: (data: Modals) => set(data),
+    close: () => set(modalsModel)
+  }
+}
+
+export const modals = createModals()
 
 export const headerText = writable('一个教务管理系统')
