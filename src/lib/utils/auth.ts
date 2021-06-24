@@ -12,6 +12,6 @@ export const checkAuth = async (): Promise<boolean> =>
     .catch(() => {
       isLogged.logout()
       userInfo.logout()
-      goto('/')
+      goto('/登录')
       return false
     })

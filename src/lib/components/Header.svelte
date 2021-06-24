@@ -3,7 +3,6 @@
   import { page } from '$app/stores'
   import { post } from '$lib/utils/fetch'
   import { roleMap } from '$lib/utils/map'
-  import { userModel } from '$lib/utils/models'
   import { getRouter } from '$lib/utils/routers'
   import { isLogged, userInfo } from '$lib/utils/stores'
   import {
@@ -26,9 +25,9 @@
     post<ILogoutRequest, void>('/api/auth/logout', { id: $userInfo.id })
       .catch(() => {})
       .finally(() => {
+        goto('/登录')
         isLogged.logout()
         userInfo.logout()
-        goto('/')
       })
   }
 </script>

@@ -2,6 +2,7 @@
   import { Button, Form, Input, Spinner } from 'sveltestrap'
   import { post } from '$lib/utils/fetch'
   import { isLogged, userInfo } from '$lib/utils/stores'
+  import { goto } from '$app/navigation'
 
   let username = ''
   let password = ''
@@ -15,13 +16,12 @@
       username: username,
       password: password
     })
-      .then((res) => setUserInfo(res.data))
+      .then((res) => {
+        isLogged.login()
+        userInfo.login(res.data)
+        goto('/')
+      })
       .catch(() => (status = 'error'))
-  }
-
-  const setUserInfo = (data: IUserResponse) => {
-    isLogged.login()
-    userInfo.login(data)
   }
 
   const clearStatus = () => {
