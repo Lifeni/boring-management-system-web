@@ -1,8 +1,9 @@
 <script lang="ts">
+  import { isLogged } from '$lib/stores/writable'
   import { checkAuth } from '$lib/utils/auth'
-  import { isLogged } from '$lib/utils/stores'
   import 'bootstrap-icons/font/bootstrap-icons.css'
   import 'bootstrap/dist/css/bootstrap.min.css'
+  import 'gridjs/dist/theme/mermaid.css'
   import 'pattern.css/dist/pattern.min.css'
   import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'

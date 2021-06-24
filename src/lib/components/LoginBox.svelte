@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+  import { isLogged, userInfo } from '$lib/stores/writable'
   import { post } from '$lib/utils/fetch'
-  import { isLogged, userInfo } from '$lib/utils/stores'
   import { onDestroy } from 'svelte'
   import { Button, Form, Input, Spinner } from 'sveltestrap'
 

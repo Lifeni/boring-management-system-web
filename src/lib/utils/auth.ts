@@ -1,6 +1,6 @@
 import { goto } from '$app/navigation'
+import { isLogged, toast, userInfo } from '../stores/writable'
 import { get } from './fetch'
-import { isLogged, toast, userInfo } from './stores'
 
 export const checkAuth = async (): Promise<boolean> =>
   get<IDataMessage<IUserResponse>>('/api/auth/')

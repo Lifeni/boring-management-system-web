@@ -41,3 +41,5 @@ const createToast = () => {
 }
 
 export const toast = createToast()
+
+export const headerText = writable('一个教务管理系统')

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+  import { headerText, isLogged, userInfo } from '$lib/stores/writable'
   import { post } from '$lib/utils/fetch'
-  import { roleMap } from '$lib/utils/map'
-  import { getRouter } from '$lib/utils/routers'
-  import { isLogged, userInfo } from '$lib/utils/stores'
+  import { roleMap } from '$lib/utils/maps'
+  import { getNav } from '$lib/utils/nav-links'
   import {
     Dropdown,
     DropdownItem,
@@ -34,16 +34,16 @@
 
 <header class="d-flex py-2 align-items-center justify-content-between w-100">
   <Nav pills class="d-flex flex-fill align-items-center">
-    <h1 class="fs-5 m-0 pe-5">一个教务管理系统</h1>
-    {#each getRouter($userInfo.role) as router}
+    <h1 class="fs-5 m-0 pe-5 header-text">{$headerText}</h1>
+    {#each getNav($userInfo.role) as nav}
       <NavItem>
-        {#if isCurrentPage(router.url)}
-          <NavLink class="px-3 mx-3" href={router.url} active>
-            {router.name}
+        {#if isCurrentPage(nav.url)}
+          <NavLink class="mx-3" href={nav.url} active>
+            {nav.name}
           </NavLink>
         {:else}
-          <NavLink href={router.url}>
-            {router.name}
+          <NavLink href={nav.url}>
+            {nav.name}
           </NavLink>
         {/if}
       </NavItem>

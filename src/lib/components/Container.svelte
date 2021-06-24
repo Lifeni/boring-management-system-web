@@ -1,6 +1,6 @@
 <script lang="ts">
   import Header from '$lib/components/Header.svelte'
-  import { isLogged } from '$lib/utils/stores'
+  import { isLogged } from '$lib/stores/writable'
   import { Col, Container, Row } from 'sveltestrap'
 </script>
 
@@ -9,7 +9,7 @@
     <Row>
       <Col><Header /></Col>
     </Row>
-    <Row class="flex-fill pt-5">
+    <Row class="flex-fill">
       <Col>
         <main class="position-relative w-100 h-100">
           <slot />

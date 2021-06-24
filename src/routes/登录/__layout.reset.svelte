@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { toast } from '$lib/utils/stores'
+  import { toast } from '$lib/stores/writable'
   import 'bootstrap/dist/css/bootstrap.min.css'
   import { Toast, ToastBody, ToastHeader } from 'sveltestrap'
 </script>

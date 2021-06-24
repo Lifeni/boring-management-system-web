@@ -42,7 +42,7 @@ type Toast = {
   isOpen: boolean
 }
 
-type RouterItem = {
+type NavItem = {
   name: string
   url: string
 }
@@ -51,4 +51,10 @@ type UserInfoStore = {
   subscribe: subscribe
   login: () => void
   logout: () => void
+}
+
+type Action = {
+  action: () => void
+  color: string
+  text: string
 }

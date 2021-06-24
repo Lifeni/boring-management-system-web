@@ -1,0 +1,38 @@
+.fs-7 {
+  font-size: 0.875rem !important;
+}
+
+.nav-link .btn-outline-primary,
+.dropdown .btn-outline-primary {
+  background-color: #fff;
+}
+
+.nav-link .btn-outline-primary:hover,
+.dropdown .btn-outline-primary:hover {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.gridjs .gridjs-footer {
+  box-shadow: none;
+  border: 1px solid #dee2e6;
+}
+
+.gridjs .gridjs-wrapper {
+  box-shadow: none;
+  border: 1px solid #dee2e6;
+  border-bottom: none;
+}
+
+.gridjs.gridjs-container {
+  font-size: 0.875rem !important;
+}
+
+.gridjs-search input {
+  font-size: 0.875rem !important;
+}
+
+.gridjs .gridjs-head {
+  padding: 0.5rem 1px;
+}

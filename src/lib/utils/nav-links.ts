@@ -1,4 +1,4 @@
-const routers = {
+const navs = {
   0: [
     { name: '主页', url: '/' },
     { name: '课程', url: '/课程管理' },
@@ -19,4 +19,4 @@ const routers = {
   default: [{ name: '主页', url: '/' }]
 }
 
-export const getRouter = (num: number): Array<RouterItem> => routers[num] || routers['default']
+export const getNav = (num: number): Array<NavItem> => navs[num] || navs['default']

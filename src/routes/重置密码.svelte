@@ -1,7 +1,7 @@
 <script lang="ts">
   import ResetPasswordBox from '$lib/components/ResetPasswordBox.svelte'
-  import { roleMap } from '$lib/utils/map'
-  import { isLogged, userInfo } from '$lib/utils/stores'
+  import { isLogged, userInfo } from '$lib/stores/writable'
+  import { roleMap } from '$lib/utils/maps'
 </script>
 
 {#if isLogged}

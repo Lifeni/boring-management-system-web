@@ -14,22 +14,6 @@ body {
   min-width: 1024px;
 }
 
-.fs-7 {
-  font-size: 0.875rem !important;
-}
-
-.nav-link .btn-outline-primary,
-.dropdown .btn-outline-primary {
-  background-color: #fff;
-}
-
-.nav-link .btn-outline-primary:hover,
-.dropdown .btn-outline-primary:hover {
-  color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
-}
-
 .loading-screen {
   position: fixed;
   left: 0;
@@ -49,4 +33,9 @@ body {
   right: 2rem;
   bottom: 2rem;
   z-index: 2000;
+}
+
+.header-text {
+  min-width: 13rem;
+  text-align: center;
 }
