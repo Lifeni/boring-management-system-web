@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { Button, Form, Input, Spinner } from 'sveltestrap'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
   import { post } from '$lib/utils/fetch'
   import { isLogged, userInfo } from '$lib/utils/stores'
-  import { goto } from '$app/navigation'
+  import { onDestroy } from 'svelte'
+  import { Button, Form, Input, Spinner } from 'sveltestrap'
 
   let username = ''
   let password = ''
@@ -29,6 +31,14 @@
       status = 'waiting'
     }
   }
+
+  const unsubscribe = page.subscribe(
+    (value) => (username = decodeURIComponent(value.query.get('用户名') || ''))
+  )
+
+  onDestroy(() => {
+    unsubscribe()
+  })
 </script>
 
 <Form on:submit={handleLogin} class="d-grid p-4 gap-3 border rounded bg-white">

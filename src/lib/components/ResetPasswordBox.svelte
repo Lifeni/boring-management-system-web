@@ -1,7 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { post } from '$lib/utils/fetch'
-  import { userModel } from '$lib/utils/models'
   import { isLogged, userInfo } from '$lib/utils/stores'
   import { onDestroy } from 'svelte'
   import { Button, Form, Input, Spinner } from 'sveltestrap'
@@ -11,7 +10,7 @@
   let newPasswordAgain = ''
 
   let status = 'waiting'
-  let time = 3
+  let time = 6
   let clock: null | NodeJS.Timeout = null
 
   const handleLogin = (e: Event) => {
@@ -25,12 +24,13 @@
     })
       .then(() => {
         status = 'ok'
+        const userName = $userInfo.name
         clock = setInterval(() => {
           time -= 1
           if (time <= 0) {
             isLogged.logout()
             userInfo.logout()
-            goto('/')
+            goto(`/登录?用户名=${userName}`)
           }
         }, 1000)
       })
@@ -90,7 +90,7 @@
   />
   {#if status === 'waiting'}
     {#if noPasswordEmpty && !checkPassword}
-      <Button type="button" block color="primary" disabled>
+      <Button type="button" block color="warning" disabled>
         {#if sameOldPassword}
           新旧密码不能相同
         {:else if !sameNewPassword}
