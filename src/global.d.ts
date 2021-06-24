@@ -9,15 +9,15 @@ interface IDataMessage<T> {
   data: T
 }
 
-interface ILoginRequest {
-  username: string
-  password: string
-}
-
-interface ILoginResponse {
+interface IUserResponse {
   userId: number
   role: number
   userName: string
+}
+
+interface ILoginRequest {
+  username: string
+  password: string
 }
 
 interface ILogoutRequest {
@@ -36,7 +36,13 @@ type UserInfo = {
   role: number
 }
 
-type FeatureItem = {
+type RouterItem = {
   name: string
   url: string
+}
+
+type UserInfoStore = {
+  subscribe: subscribe
+  login: () => void
+  logout: () => void
 }

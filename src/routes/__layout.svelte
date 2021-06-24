@@ -1,12 +1,29 @@
 <script lang="ts">
-  import 'bootstrap/dist/css/bootstrap.min.css'
+  import { checkAuth } from '$lib/utils/auth'
+  import { isLogged } from '$lib/utils/stores'
   import 'bootstrap-icons/font/bootstrap-icons.css'
+  import 'bootstrap/dist/css/bootstrap.min.css'
   import 'pattern.css/dist/pattern.min.css'
+  import { onMount } from 'svelte'
+  import { fade } from 'svelte/transition'
+  import { Spinner } from 'sveltestrap'
+
+  let isLoading = null
+  onMount(() => {
+    if (!$isLogged) isLoading = checkAuth()
+  })
 </script>
 
-<div class="w-100 vh-100 px-5 py-4">
-  <slot />
-</div>
+{#if isLoading === null}
+  <div class="loading-screen" out:fade>
+    <Spinner color="primary" class="mt-4 mb-2" />
+    <p class="fs-6 py-2 text-muted">正在加载</p>
+  </div>
+{:else}
+  <div class="w-100 vh-100 px-5 py-4">
+    <slot />
+  </div>
+{/if}
 
 <style global>
   :root {
@@ -30,6 +47,26 @@
   }
 
   .dropdown .btn-outline-primary {
+    background-color: #fff;
+  }
+
+  .dropdown .btn-outline-primary:hover {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+
+  .loading-screen {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: #fff;
   }
 </style>

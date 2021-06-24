@@ -28,8 +28,8 @@
         clock = setInterval(() => {
           time -= 1
           if (time <= 0) {
-            isLogged.set(false)
-            userInfo.set(userModel)
+            isLogged.logout()
+            userInfo.logout()
             goto('/')
           }
         }, 1000)
@@ -43,12 +43,10 @@
     }
   }
 
-  $: checkPassword =
-    oldPassword &&
-    newPassword &&
-    newPasswordAgain &&
-    oldPassword !== newPassword &&
-    newPassword === newPasswordAgain
+  $: noPasswordEmpty = !!oldPassword && !!newPassword && !!newPasswordAgain
+  $: sameOldPassword = oldPassword === newPassword
+  $: sameNewPassword = newPassword === newPasswordAgain
+  $: checkPassword = !sameOldPassword && sameNewPassword
 
   onDestroy(() => {
     if (clock) {
@@ -91,7 +89,17 @@
     on:input={clearStatus}
   />
   {#if status === 'waiting'}
-    <Button type="submit" block color="primary" disabled={!checkPassword}>重置</Button>
+    {#if noPasswordEmpty && !checkPassword}
+      <Button type="button" block color="primary" disabled>
+        {#if sameOldPassword}
+          新旧密码不能相同
+        {:else if !sameNewPassword}
+          两个密码不一致
+        {/if}
+      </Button>
+    {:else}
+      <Button type="submit" block color="primary" disabled={!checkPassword}>重置</Button>
+    {/if}
   {:else if status === 'ok'}
     <Button type="button" disabled block color="success">重置成功（{time} 秒后跳转）</Button>
   {:else if status === 'loading'}
@@ -101,4 +109,5 @@
   {:else if status === 'error'}
     <Button type="button" block color="danger">重置失败</Button>
   {/if}
+  <Button href="/" block outline color="primary">回到主页</Button>
 </Form>

@@ -1,9 +1,9 @@
 <script lang="ts">
   import Container from '$lib/components/Container.svelte'
   import LoginBox from '$lib/components/LoginBox.svelte'
+
   import { weekMap } from '$lib/utils/map'
   import { isLogged, userInfo } from '$lib/utils/stores'
-  import { Button } from 'sveltestrap'
 
   const getDate = () => {
     const date = new Date()

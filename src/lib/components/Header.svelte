@@ -1,44 +1,50 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
   import { post } from '$lib/utils/fetch'
-  import { roleMap, featureMap } from '$lib/utils/map'
+  import { roleMap } from '$lib/utils/map'
   import { userModel } from '$lib/utils/models'
+  import { getRouter } from '$lib/utils/routers'
   import { isLogged, userInfo } from '$lib/utils/stores'
   import {
-    Nav,
-    NavItem,
-    NavLink,
     Dropdown,
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
-    Icon
+    Icon,
+    Nav,
+    NavItem,
+    NavLink
   } from 'sveltestrap'
 
-  const path = window.location.pathname
-  const isCurrentPage = (url: string) => url === decodeURIComponent(path)
+  let isCurrentPage = (_url: string) => false
+  page.subscribe((value) => {
+    isCurrentPage = (url: string) => url === decodeURIComponent(value.path)
+  })
 
   const handleLogout = () => {
-    post<ILogoutRequest, IBaseMessage>('/api/auth/logout', { id: $userInfo.id }).finally(() => {
-      isLogged.set(false)
-      userInfo.set(userModel)
-      goto('/')
-    })
+    post<ILogoutRequest, void>('/api/auth/logout', { id: $userInfo.id })
+      .catch(() => {})
+      .finally(() => {
+        isLogged.logout()
+        userInfo.logout()
+        goto('/')
+      })
   }
 </script>
 
 <header class="d-flex py-2 align-items-center justify-content-between w-100">
   <Nav pills class="d-flex align-items-center">
     <h1 class="fs-5 m-0 pe-5">一个教务管理系统</h1>
-    {#each featureMap($userInfo.role) as feature}
+    {#each getRouter($userInfo.role) as router}
       <NavItem>
-        {#if isCurrentPage(feature.url)}
-          <NavLink class="px-3 mx-3" href={feature.url} active>
-            {feature.name}
+        {#if isCurrentPage(router.url)}
+          <NavLink class="px-3 mx-3" href={router.url} active>
+            {router.name}
           </NavLink>
         {:else}
-          <NavLink href={feature.url}>
-            {feature.name}
+          <NavLink href={router.url}>
+            {router.name}
           </NavLink>
         {/if}
       </NavItem>
