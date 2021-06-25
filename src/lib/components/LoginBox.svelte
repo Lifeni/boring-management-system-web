@@ -1,12 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { isLogged, userInfo } from '$lib/stores/writable'
+  import { isLoading, isLogged, userInfo } from '$lib/stores/writable'
   import { post } from '$lib/utils/fetch'
-  import { onDestroy } from 'svelte'
   import { Button, Form, Input, Spinner } from 'sveltestrap'
 
-  let username = ''
+  let username = decodeURIComponent($page.query.get('用户名') || '')
   let password = ''
   let status = 'waiting'
 
@@ -22,6 +21,7 @@
         isLogged.login()
         userInfo.login(res.data)
         goto('/')
+        isLoading.set(true)
       })
       .catch(() => (status = 'error'))
   }
@@ -31,14 +31,6 @@
       status = 'waiting'
     }
   }
-
-  const unsubscribe = page.subscribe(
-    (value) => (username = decodeURIComponent(value.query.get('用户名') || ''))
-  )
-
-  onDestroy(() => {
-    unsubscribe()
-  })
 </script>
 
 <Form on:submit={handleLogin} class="d-grid p-4 gap-3 border rounded bg-white">
@@ -72,5 +64,9 @@
     </Button>
   {:else if status === 'error'}
     <Button type="button" block color="danger">登录失败</Button>
+  {/if}
+
+  {#if decodeURIComponent($page.query.get('走错了吗')) === '是的'}
+    <Button href="/" block outline color="primary">回到主页</Button>
   {/if}
 </Form>

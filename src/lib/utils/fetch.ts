@@ -1,8 +1,31 @@
+import { goto } from '$app/navigation'
+import { toast } from '../stores/writable'
+
 const handleResponse = async (res: Response) => {
   if (res.ok) {
     if (res.status === 200) return await res.json()
   } else {
-    throw new Error(res.statusText)
+    switch (res.status) {
+      case 401: {
+        goto('/登录')
+        toast.open({
+          title: '发生了什么？',
+          body: '不用担心，只是登录失效了，再来一次就好了',
+          isOpen: true
+        })
+        break
+      }
+
+      case 403: {
+        goto('/登录?走错了吗=是的')
+        toast.open({
+          title: '发生了什么？',
+          body: '知道吗，那不是你应该来的地方',
+          isOpen: true
+        })
+        break
+      }
+    }
   }
 }
 

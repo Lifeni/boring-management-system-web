@@ -12,13 +12,8 @@
 
   isLoading.set(true)
   onMount(async () => {
-    const result = await checkAuth()
-    if (result) {
-      isLoading.set(false)
-    } else {
-      await goto('/登录', { replaceState: true })
-      isLoading.set(false)
-    }
+    await checkAuth()
+    isLoading.set(false)
   })
 </script>
 

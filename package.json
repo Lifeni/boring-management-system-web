@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@sveltejs/kit": "next",
+    "@types/lodash": "^4.14.170",
     "@types/node": "^15.12.4",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
@@ -33,6 +34,7 @@
     "bootstrap-icons": "^1.5.0",
     "gridjs": "^5.0.2",
     "gridjs-svelte": "^1.2.0",
+    "lodash": "^4.17.21",
     "pattern.css": "^1.0.0",
     "sveltestrap": "^5.2.1"
   }

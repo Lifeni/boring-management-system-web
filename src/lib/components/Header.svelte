@@ -16,10 +16,7 @@
     NavLink
   } from 'sveltestrap'
 
-  let isCurrentPage = (_url: string) => false
-  page.subscribe((value) => {
-    isCurrentPage = (url: string) => url === decodeURIComponent(value.path)
-  })
+  $: isCurrentPage = (url: string) => url === decodeURIComponent($page.path)
 
   const handleLogout = () => {
     post<ILogoutRequest, void>('/api/auth/logout', { id: $userInfo.id })

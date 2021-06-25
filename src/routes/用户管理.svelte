@@ -66,7 +66,7 @@
   }
 
   onMount(() => {
-    get<IDataMessage<Array<IUserResponse>>>('/api/user/').then((res) => {
+    get<IDataMessage<Array<IUserResponse>>>('/api/users/').then((res) => {
       users = res.data.map((user) => [user.userId, user.userName, roleMap(user.role)])
     })
   })

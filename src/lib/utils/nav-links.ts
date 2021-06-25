@@ -1,4 +1,4 @@
-const navs = {
+const navLinks = {
   0: [
     { name: '主页', url: '/' },
     { name: '课程', url: '/课程管理' },
@@ -19,4 +19,4 @@ const navs = {
   default: [{ name: '主页', url: '/' }]
 }
 
-export const getNav = (num: number): Array<NavItem> => navs[num] || navs['default']
+export const getNav = (num: number): Array<NavItem> => navLinks[num] || navLinks['default']
