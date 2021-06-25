@@ -30,6 +30,10 @@ interface IResetPasswordRequest {
   newPassword: string
 }
 
+interface IResetPasswordRequestByAdmin {
+  password: string
+}
+
 type UserInfo = {
   name: string
   id: number

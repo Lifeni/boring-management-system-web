@@ -4,14 +4,6 @@ import { toast } from '../stores/writable'
 const handleResponse = async (res: Response) => {
   if (res.ok) {
     if (res.status === 200) return await res.json()
-    if (res.status === 500) {
-      toast.open({
-        title: 'Error 500',
-        body: '服务器出错了，检查一下吧',
-        color: 'danger',
-        isOpen: true
-      })
-    }
   } else {
     switch (res.status) {
       case 401: {
@@ -35,6 +27,29 @@ const handleResponse = async (res: Response) => {
         })
         break
       }
+
+      default: {
+        switch (res.status / 100 - (res.status % 100)) {
+          case 4: {
+            toast.open({
+              title: `Error ${res.status}`,
+              body: `网页出错了（${res.statusText}），检查一下吧`,
+              color: 'danger',
+              isOpen: true
+            })
+            break
+          }
+          case 5: {
+            toast.open({
+              title: `Error ${res.status}`,
+              body: `服务器出错了（${res.statusText}），检查一下吧`,
+              color: 'danger',
+              isOpen: true
+            })
+            break
+          }
+        }
+      }
     }
   }
 }
@@ -54,3 +69,6 @@ export const post = async <T, K>(url: string, body: T): Promise<K> =>
   })
     .then(handleResponse)
     .catch(handleError)
+
+export const del = async <T>(url: string): Promise<T> =>
+  fetch(url, { method: 'DELETE' }).then(handleResponse).catch(handleError)

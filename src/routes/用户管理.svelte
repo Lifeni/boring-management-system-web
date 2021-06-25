@@ -3,7 +3,7 @@
   import Grid from '$lib/components/Grid.svelte'
   import Modal from '$lib/components/Modal.svelte'
   import { headerText, modal, modalInput, toast } from '$lib/stores/writable'
-  import { get, post } from '$lib/utils/fetch'
+  import { del, get, post } from '$lib/utils/fetch'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
   import { roleMap } from '$lib/utils/maps'
   import type Row from 'gridjs/dist/src/row'
@@ -52,7 +52,9 @@
     })
 
     const action = () => {
-      post(`/api/users/${id}/reset-password`, { password: $modalInput }).then(() => {
+      post<IResetPasswordRequestByAdmin, IBaseMessage>(`/api/users/${id}/reset-password`, {
+        password: $modalInput
+      }).then(() => {
         toast.open({
           title: '操作成功',
           body: `成功重置用户「${name}」的密码`,
@@ -70,11 +72,24 @@
       title: `删除用户`,
       body: `将会删除 <strong>${name}</strong> 的所有信息，此操作 <strong>不可撤销</strong>，请谨慎操作`,
       size: 'sm',
-      action: () => console.log(id),
+      action: () => action(),
       actionType: 'danger',
       actionText: '删除',
       isOpen: true
     })
+
+    const action = () => {
+      del<IBaseMessage>(`/api/users/${id}/`).then(() => {
+        fetchUsers()
+        toast.open({
+          title: '操作成功',
+          body: `成功删除用户「${name}」的账号`,
+          color: 'danger',
+          isOpen: true
+        })
+        modal.close()
+      })
+    }
   }
 
   const fetchUsers = () => {
@@ -94,7 +109,7 @@
 <Container>
   {#if users}
     <Grid {columns} data={users}>
-      <Button color="primary" outline on:click={() => fetchUsers()}>
+      <Button color="primary" on:click={() => fetchUsers()}>
         <Icon name="arrow-clockwise" />
         刷新数据
       </Button>
