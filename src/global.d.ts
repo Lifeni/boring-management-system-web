@@ -36,9 +36,12 @@ type UserInfo = {
   role: number
 }
 
+type Colors = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+
 type Toast = {
   title: string
   body: string
+  color?: Colors
   isOpen: boolean
 }
 
@@ -48,7 +51,7 @@ type Modal = {
   size?: string
   action: () => void
   actionText?: string
-  actionType?: ButtonColor
+  actionType?: Colors
   hasInput?: boolean
   inputType?: InputType
   inputPlaceholder?: string

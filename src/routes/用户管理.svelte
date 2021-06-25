@@ -2,8 +2,8 @@
   import Container from '$lib/components/Container.svelte'
   import Grid from '$lib/components/Grid.svelte'
   import Modal from '$lib/components/Modal.svelte'
-  import { headerText, modal } from '$lib/stores/writable'
-  import { get } from '$lib/utils/fetch'
+  import { headerText, modal, modalInput, toast } from '$lib/stores/writable'
+  import { get, post } from '$lib/utils/fetch'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
   import { roleMap } from '$lib/utils/maps'
   import type Row from 'gridjs/dist/src/row'
@@ -45,11 +45,23 @@
       title: `重置用户密码`,
       body: `将会重置 <strong>${name}</strong> 的密码`,
       size: 'sm',
-      action: () => console.log(id),
+      action: () => action(),
       hasInput: true,
       inputPlaceholder: '输入新密码',
       isOpen: true
     })
+
+    const action = () => {
+      post(`/api/users/${id}/reset-password`, { password: $modalInput }).then(() => {
+        toast.open({
+          title: '操作成功',
+          body: `成功重置用户「${name}」的密码`,
+          color: 'primary',
+          isOpen: true
+        })
+        modal.close()
+      })
+    }
   }
 
   const deleteUser = (id: number, name: string) => {
@@ -68,7 +80,6 @@
   const fetchUsers = () => {
     get<IDataMessage<Array<IUserResponse>>>('/api/users/').then((res) => {
       users = res?.data.map((user) => [user.userId, user.userName, roleMap(user.role)])
-      console.log(users)
     })
   }
 

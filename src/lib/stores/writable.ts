@@ -54,6 +54,8 @@ const createModal = () => {
 
 export const modal = createModal()
 
+export const modalInput = writable('')
+
 export const headerText = writable('一个教务管理系统')
 
 export const isLoading = writable(true)

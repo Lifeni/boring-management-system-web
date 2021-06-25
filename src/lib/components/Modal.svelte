@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { modal } from '$lib/stores/writable'
+  import { modal, modalInput } from '$lib/stores/writable'
   import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'sveltestrap'
 
   let toggle = () => modal.close()
+  let input = ''
   $: thisModal = $modal
+  $: modalInput.set(input)
 </script>
 
 <Modal class="global-modal" isOpen={thisModal.isOpen} {toggle} size={thisModal.size}>
@@ -15,6 +17,8 @@
         class="mt-3"
         type={thisModal.inputType || 'text'}
         placeholder={thisModal.inputPlaceholder || '请输入 ...'}
+        autofocus
+        bind:value={input}
       />
     {/if}
   </ModalBody>

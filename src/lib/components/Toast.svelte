@@ -6,6 +6,6 @@
 </script>
 
 <Toast class="global-toast" autohide isOpen={to.isOpen} on:close={() => toast.close()}>
-  <ToastHeader icon="warning">{to.title}</ToastHeader>
+  <ToastHeader icon={to.color || 'primary'}>{to.title}</ToastHeader>
   <ToastBody>{to.body}</ToastBody>
 </Toast>

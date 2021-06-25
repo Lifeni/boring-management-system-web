@@ -7,6 +7,7 @@ export const userModel: UserInfo = {
 export const toastModel: Toast = {
   title: '',
   body: '',
+  color: 'primary',
   isOpen: false
 }
 

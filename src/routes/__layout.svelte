@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
+  import Toast from '$lib/components/Toast.svelte'
   import { isLoading, isLogged } from '$lib/stores/writable'
   import { checkAuth } from '$lib/utils/check-auth'
   import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -27,3 +27,5 @@
     <slot />
   </div>
 {/if}
+
+<Toast />
