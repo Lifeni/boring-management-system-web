@@ -29,11 +29,18 @@ const handleResponse = async (res: Response) => {
   }
 }
 
-export const get = async <T>(url: string): Promise<T> => fetch(url).then(handleResponse)
+const handleError = (err: Error) => {
+  console.debug(err)
+}
+
+export const get = async <T>(url: string): Promise<T> =>
+  fetch(url).then(handleResponse).catch(handleError)
 
 export const post = async <T, K>(url: string, body: T): Promise<K> =>
   fetch(url, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: { 'content-type': 'application/json' }
-  }).then(handleResponse)
+  })
+    .then(handleResponse)
+    .catch(handleError)

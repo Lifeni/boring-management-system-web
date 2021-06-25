@@ -41,3 +41,7 @@
 .gridjs .gridjs-th {
   background-clip: padding-box;
 }
+
+.gridjs .gridjs-table {
+  width: 100%;
+}

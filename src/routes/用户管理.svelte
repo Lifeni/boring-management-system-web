@@ -1,22 +1,22 @@
 <script lang="ts">
   import Container from '$lib/components/Container.svelte'
+  import Grid from '$lib/components/Grid.svelte'
   import Modal from '$lib/components/Modal.svelte'
-  import { gridOptions } from '$lib/stores/readable'
   import { headerText, modal } from '$lib/stores/writable'
   import { get } from '$lib/utils/fetch'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
   import { roleMap } from '$lib/utils/maps'
-  import Grid from 'gridjs-svelte'
   import type Row from 'gridjs/dist/src/row'
   import type { TCell } from 'gridjs/dist/src/types'
   import { onMount } from 'svelte'
+  import { Button, Icon } from 'sveltestrap'
 
   let users: Array<Array<string | number>> = null
 
   const columns = [
-    '用户 ID',
-    '用户名',
-    '用户身份',
+    { name: '用户 ID' },
+    { name: '用户名' },
+    { name: '用户身份' },
     {
       name: '操作',
       sort: { enabled: false },
@@ -65,12 +65,14 @@
     })
   }
 
-  onMount(() => {
+  const fetchUsers = () => {
     get<IDataMessage<Array<IUserResponse>>>('/api/users/').then((res) => {
-      users = res.data.map((user) => [user.userId, user.userName, roleMap(user.role)])
+      users = res?.data.map((user) => [user.userId, user.userName, roleMap(user.role)])
+      console.log(users)
     })
-  })
+  }
 
+  onMount(() => fetchUsers())
   headerText.set('用户账户管理')
 </script>
 
@@ -80,10 +82,12 @@
 
 <Container>
   {#if users}
-    <div class="p-5">
-      <Grid {columns} data={users} {...$gridOptions} />
-    </div>
-
+    <Grid {columns} data={users}>
+      <Button color="primary" outline on:click={() => fetchUsers()}>
+        <Icon name="arrow-clockwise" />
+        刷新数据
+      </Button>
+    </Grid>
     <Modal />
   {/if}
 </Container>

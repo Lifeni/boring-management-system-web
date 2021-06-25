@@ -49,3 +49,13 @@ body {
   min-width: 13rem;
   text-align: center;
 }
+
+.grid-tools {
+  position: relative;
+  width: fit-content;
+  z-index: 10;
+  margin: 0 0 -3.25rem auto;
+  padding: 2px;
+  display: flex;
+  justify-content: flex-end;
+}

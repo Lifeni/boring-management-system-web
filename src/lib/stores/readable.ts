@@ -5,14 +5,11 @@ export const gridOptions = readable({
   search: true,
   sort: true,
   resizable: true,
+  width: '100%',
+  autoWidth: true,
   language: {
-    search: {
-      placeholder: '在此搜索 ...'
-    },
-    sort: {
-      sortAsc: '升序排序',
-      sortDesc: '降序排序'
-    },
+    search: { placeholder: '在此搜索 ...' },
+    sort: { sortAsc: '升序排序', sortDesc: '降序排序' },
     pagination: {
       previous: '上一页',
       next: '下一页',
