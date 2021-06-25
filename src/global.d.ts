@@ -15,6 +15,15 @@ interface IUserResponse {
   userName: string
 }
 
+interface IStudentResponse {
+  userId: number
+  userName: string
+  sex: string
+  birthYear: string
+  grade: string
+  collegeId: number
+}
+
 interface ILoginRequest {
   username: string
   password: string
@@ -34,19 +43,26 @@ interface IResetPasswordRequestByAdmin {
   password: string
 }
 
+type ModalStore = {
+  subscribe: (this: void, run: Subscriber<Toast>, invalidate?: Invalidator<Toast>) => Unsubscriber
+  toggle: () => void
+  open: () => void
+  close: () => void
+}
+
 type UserInfo = {
   name: string
   id: number
   role: number
 }
 
-type Student = {
-  userId: number
-  userName: string
+type StudentInfo = {
+  id: number
+  name: string
   sex: string
-  birthYear: string
+  birth: string
   grade: string
-  collegeId: string
+  college: string
 }
 
 type Colors = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
@@ -55,20 +71,7 @@ type Toast = {
   title: string
   body: string
   color?: Colors
-  isOpen: boolean
-}
-
-type Modal = {
-  title: string
-  body: string
-  size?: string
-  action: () => void
-  actionText?: string
-  actionType?: Colors
-  hasInput?: boolean
-  inputType?: InputType
-  inputPlaceholder?: string
-  isOpen: boolean
+  isOpen?: boolean
 }
 
 type NavItem = {

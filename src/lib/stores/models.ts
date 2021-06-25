@@ -4,31 +4,18 @@ export const userModel: UserInfo = {
   role: null
 }
 
-export const studentModel: Student = {
-  userId: null,
-  userName: null,
+export const studentModel: StudentInfo = {
+  id: null,
+  name: null,
   sex: null,
-  birthYear: null,
+  birth: null,
   grade: null,
-  collegeId: null
+  college: null
 }
 
 export const toastModel: Toast = {
   title: '',
   body: '',
   color: 'primary',
-  isOpen: false
-}
-
-export const modalModel: Modal = {
-  title: '',
-  body: '',
-  size: '',
-  action: () => console.log('Modal'),
-  actionText: '确定',
-  actionType: 'primary',
-  hasInput: false,
-  inputType: 'text',
-  inputPlaceholder: '',
   isOpen: false
 }

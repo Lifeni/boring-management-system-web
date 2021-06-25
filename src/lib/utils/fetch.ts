@@ -12,8 +12,7 @@ const handleResponse = async (res: Response) => {
         toast.open({
           title: '发生了什么？',
           body: '不用担心，只是登录失效了，再来一次就好了',
-          color: 'warning',
-          isOpen: true
+          color: 'warning'
         })
         break
       }
@@ -23,8 +22,7 @@ const handleResponse = async (res: Response) => {
         toast.open({
           title: '发生了什么？',
           body: '知道吗，那不是你应该来的地方',
-          color: 'warning',
-          isOpen: true
+          color: 'warning'
         })
         break
       }
@@ -35,8 +33,7 @@ const handleResponse = async (res: Response) => {
             toast.open({
               title: `Error ${res.status}`,
               body: `获取数据出错了（${res.statusText}），检查一下吧`,
-              color: 'danger',
-              isOpen: true
+              color: 'danger'
             })
             break
           }
@@ -44,8 +41,7 @@ const handleResponse = async (res: Response) => {
             toast.open({
               title: `Error ${res.status}`,
               body: `服务器出错了（${res.statusText}），检查一下吧`,
-              color: 'danger',
-              isOpen: true
+              color: 'danger'
             })
             break
           }
