@@ -10,7 +10,6 @@
   import type Row from 'gridjs/dist/src/row'
   import type { TCell } from 'gridjs/dist/src/types'
   import { onMount } from 'svelte'
-  import { Input } from 'sveltestrap'
 
   let users: Array<Array<string | number>> = null
 
@@ -23,7 +22,7 @@
       sort: { enabled: false },
       formatter: (_: TCell, row: Row) => {
         const id = Number(row.cells[0].data)
-        const name = row.cells[1].data
+        const name = row.cells[1].data as string
         return actionWrapper(
           action({
             text: '重置密码',

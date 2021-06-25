@@ -1,4 +1,3 @@
-import { goto } from '$app/navigation'
 import { isLogged, toast, userInfo } from '../stores/writable'
 import { get } from './fetch'
 
@@ -12,7 +11,6 @@ export const checkAuth = async (): Promise<boolean> =>
     .catch(() => {
       isLogged.logout()
       userInfo.logout()
-      goto('/登录')
       toast.open({
         title: '发生了什么？',
         body: '不用担心，只是登录失效了，再来一次就好了',
