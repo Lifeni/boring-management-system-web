@@ -2,16 +2,7 @@
   import { browser, dev } from '$app/env'
   import Container from '$lib/components/Container.svelte'
   import { headerText, userInfo } from '$lib/stores/writable'
-  import { weekMap } from '$lib/utils/maps'
-
-  const getDate = () => {
-    const date = new Date()
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const week = date.getDay()
-    return `${year} 年 ${month} 月 ${day} 日，${weekMap(week)}`
-  }
+  import { dateFormatWeek } from '$lib/utils/format'
 
   headerText.set('一个教务管理系统')
 </script>
@@ -23,7 +14,7 @@
 <Container>
   <div class="p-5 h-100 d-flex flex-column">
     <h2 class="fs-1 mt-5 ">欢迎回来，{$userInfo.name}</h2>
-    <h3 class="fs-3 pt-3 pb-5">今天是 {getDate()}</h3>
+    <h3 class="fs-3 pt-3 pb-5">今天是 {dateFormatWeek(new Date())}</h3>
     <section class="mt-5 mb-2 flex-fill d-flex flex-column justify-content-end">
       <span class="d-block py-1 fs-7 text-muted">
         #&nbsp;&nbsp;&nbsp;使用 SvelteKit 和 Bootstrap 构建

@@ -3,7 +3,7 @@
   import Grid from 'gridjs-svelte'
 
   export let columns: any
-  export let data: Array<Array<string | number>>
+  export let data: Array<Array<string | number | Date>>
 
   let grid: Grid
   $: grid?.instance.updateConfig({ data }).forceRender()

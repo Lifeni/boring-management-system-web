@@ -40,6 +40,15 @@ type UserInfo = {
   role: number
 }
 
+type Student = {
+  userId: number
+  userName: string
+  sex: string
+  birthYear: string
+  grade: string
+  collegeId: string
+}
+
 type Colors = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
 
 type Toast = {
@@ -75,6 +84,6 @@ type UserInfoStore = {
 
 type Action = {
   action: () => void
-  color: string
+  color: Colors
   text: string
 }

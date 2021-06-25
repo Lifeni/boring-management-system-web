@@ -6,4 +6,5 @@ export const action = ({ action, color, text }: Action): VNode => {
   return h('button', { onClick: action, className }, text)
 }
 
-export const actionWrapper = (...children: Array<VNode>): VNode => h('div', {}, ...children)
+export const actionWrapper = (...children: Array<VNode>): VNode =>
+  h('div', { className: 'action-wrapper' }, ...children)

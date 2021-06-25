@@ -4,6 +4,7 @@ import { toast } from '../stores/writable'
 const handleResponse = async (res: Response) => {
   if (res.ok) {
     if (res.status === 200) return await res.json()
+    else return true
   } else {
     switch (res.status) {
       case 401: {
@@ -29,11 +30,11 @@ const handleResponse = async (res: Response) => {
       }
 
       default: {
-        switch (res.status / 100 - (res.status % 100)) {
+        switch ((res.status - (res.status % 100)) / 100) {
           case 4: {
             toast.open({
               title: `Error ${res.status}`,
-              body: `网页出错了（${res.statusText}），检查一下吧`,
+              body: `获取数据出错了（${res.statusText}），检查一下吧`,
               color: 'danger',
               isOpen: true
             })
@@ -47,6 +48,9 @@ const handleResponse = async (res: Response) => {
               isOpen: true
             })
             break
+          }
+          default: {
+            return false
           }
         }
       }

@@ -2,6 +2,10 @@
   font-size: 0.875rem !important;
 }
 
+.me-2\.5 {
+  margin-right: 0.75rem !important;
+}
+
 .nav-link .btn-outline-primary,
 .dropdown .btn-outline-primary {
   background-color: #fff;
@@ -36,6 +40,10 @@
 
 .gridjs .gridjs-head {
   padding: 0.5rem 1px;
+}
+
+.gridjs .gridjs-search {
+  float: right;
 }
 
 .gridjs .gridjs-th {

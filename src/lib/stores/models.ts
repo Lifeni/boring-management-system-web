@@ -4,6 +4,15 @@ export const userModel: UserInfo = {
   role: null
 }
 
+export const studentModel: Student = {
+  userId: null,
+  userName: null,
+  sex: null,
+  birthYear: null,
+  grade: null,
+  collegeId: null
+}
+
 export const toastModel: Toast = {
   title: '',
   body: '',

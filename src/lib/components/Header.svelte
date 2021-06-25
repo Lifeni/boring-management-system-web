@@ -16,7 +16,10 @@
     NavLink
   } from 'sveltestrap'
 
-  $: isCurrentPage = (url: string) => url === decodeURIComponent($page.path)
+  $: isCurrentPage = (url: string) =>
+    url === '/'
+      ? '/' === decodeURIComponent($page.path)
+      : decodeURIComponent($page.path).startsWith(url)
 
   const handleLogout = () => {
     post<ILogoutRequest, void>('/api/auth/logout', { id: $userInfo.id })
