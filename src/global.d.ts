@@ -42,7 +42,7 @@ type Toast = {
   isOpen: boolean
 }
 
-type Modals = {
+type Modal = {
   title: string
   body: string
   size?: string

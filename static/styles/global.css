@@ -35,7 +35,7 @@ body {
   z-index: 2000;
 }
 
-.global-modals {
+.global-modal {
   z-index: 1800;
   width: 100vw;
   height: 100%;

@@ -1,8 +1,8 @@
 <script lang="ts">
   import Container from '$lib/components/Container.svelte'
-  import Modals from '$lib/components/Modals.svelte'
+  import Modal from '$lib/components/Modal.svelte'
   import { gridOptions } from '$lib/stores/readable'
-  import { headerText, modals } from '$lib/stores/writable'
+  import { headerText, modal } from '$lib/stores/writable'
   import { get } from '$lib/utils/fetch'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
   import { roleMap } from '$lib/utils/maps'
@@ -40,8 +40,8 @@
   ]
 
   const resetPassword = (id: number, name: string) => {
-    modals.close()
-    modals.open({
+    modal.close()
+    modal.open({
       title: `重置用户密码`,
       body: `将会重置 <strong>${name}</strong> 的密码`,
       size: 'sm',
@@ -53,8 +53,8 @@
   }
 
   const deleteUser = (id: number, name: string) => {
-    modals.close()
-    modals.open({
+    modal.close()
+    modal.open({
       title: `删除用户`,
       body: `将会删除 <strong>${name}</strong> 的所有信息，此操作 <strong>不可撤销</strong>，请谨慎操作`,
       size: 'sm',
@@ -84,6 +84,6 @@
       <Grid {columns} data={users} {...$gridOptions} />
     </div>
 
-    <Modals />
+    <Modal />
   {/if}
 </Container>

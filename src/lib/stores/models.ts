@@ -10,11 +10,11 @@ export const toastModel: Toast = {
   isOpen: false
 }
 
-export const modalsModel: Modals = {
+export const modalModel: Modal = {
   title: '',
   body: '',
   size: '',
-  action: () => console.log('Modals'),
+  action: () => console.log('Modal'),
   actionText: '确定',
   actionType: 'primary',
   hasInput: false,
