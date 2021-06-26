@@ -1,6 +1,7 @@
 <script lang="ts">
   import { gridOptions } from '$lib/stores/readable'
   import Grid from 'gridjs-svelte'
+  import { fade } from 'svelte/transition'
 
   export let columns: any
   export let data: Array<Array<string | number | Date>>
@@ -9,7 +10,7 @@
   $: grid?.instance.updateConfig({ data }).forceRender()
 </script>
 
-<div class="p-5">
+<div class="p-5" in:fade={{ duration: 200 }}>
   <div class="grid-tools">
     <slot />
   </div>

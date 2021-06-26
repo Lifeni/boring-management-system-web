@@ -18,7 +18,7 @@
 </script>
 
 {#if !$isLogged || $isLoading}
-  <div class="loading-screen" out:fade>
+  <div class="loading-screen" out:fade={{ duration: 200 }}>
     <Spinner color="primary" class="mt-4 mb-2" />
     <p class="fs-6 py-2 text-muted">正在加载</p>
   </div>
@@ -26,6 +26,5 @@
   <div class="w-100 vh-100 px-5 py-4">
     <slot />
   </div>
+  <Toast />
 {/if}
-
-<Toast />

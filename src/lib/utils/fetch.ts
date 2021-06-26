@@ -8,22 +8,12 @@ const handleResponse = async (res: Response) => {
   } else {
     switch (res.status) {
       case 401: {
-        goto('/登录')
-        toast.open({
-          title: '发生了什么？',
-          body: '不用担心，只是登录失效了，再来一次就好了',
-          color: 'warning'
-        })
+        goto('/登录?错误代码=401')
         break
       }
 
       case 403: {
-        goto('/登录?走错了吗=是的')
-        toast.open({
-          title: '发生了什么？',
-          body: '知道吗，那不是你应该来的地方',
-          color: 'warning'
-        })
+        goto('/登录?走错了吗=是的&错误代码=403')
         break
       }
 

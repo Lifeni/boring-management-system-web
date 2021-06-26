@@ -82,7 +82,7 @@
         students.sex,
         dateFormat(new Date(students.birthYear), '-'),
         dateFormat(new Date(students.grade), '-'),
-        students.collegeId
+        students.collegeName
       ])
     })
   }

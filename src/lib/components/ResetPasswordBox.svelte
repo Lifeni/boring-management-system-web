@@ -10,7 +10,7 @@
   let newPasswordAgain = ''
 
   let status = 'waiting'
-  let time = 6
+  let time = 3
   let clock: null | NodeJS.Timeout = null
 
   const handleLogin = (e: Event) => {
@@ -90,7 +90,7 @@
   />
   {#if status === 'waiting'}
     {#if noPasswordEmpty && !checkPassword}
-      <Button type="button" block color="warning" disabled>
+      <Button type="button" block color="warning" on:click={() => {}}>
         {#if sameOldPassword}
           新旧密码不能相同
         {:else if !sameNewPassword}
@@ -101,7 +101,7 @@
       <Button type="submit" block color="primary" disabled={!checkPassword}>重置</Button>
     {/if}
   {:else if status === 'ok'}
-    <Button type="button" disabled block color="success">重置成功（{time} 秒后跳转）</Button>
+    <Button type="button" href="/" block color="success">重置成功（{time} 秒后跳转）</Button>
   {:else if status === 'loading'}
     <Button type="button" disabled block color="primary">
       <Spinner size="sm" />

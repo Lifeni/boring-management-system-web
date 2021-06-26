@@ -22,6 +22,7 @@ interface IStudentResponse {
   birthYear: string
   grade: string
   collegeId: number
+  collegeName: string
 }
 
 interface ILoginRequest {

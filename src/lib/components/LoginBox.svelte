@@ -1,8 +1,9 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { isLoading, isLogged, userInfo } from '$lib/stores/writable'
+  import { isLoading, isLogged, toast, userInfo } from '$lib/stores/writable'
   import { post } from '$lib/utils/fetch'
+  import { onMount } from 'svelte'
   import { Button, Form, Input, Spinner } from 'sveltestrap'
 
   let username = decodeURIComponent($page.query.get('用户名') || '')
@@ -31,6 +32,28 @@
       status = 'waiting'
     }
   }
+
+  onMount(() => {
+    const error = decodeURIComponent($page.query.get('错误代码') || '')
+    switch (Number(error)) {
+      case 401: {
+        toast.open({
+          title: '发生了什么？',
+          body: '不用担心，只是登录失效了，再来一次就好了',
+          color: 'warning'
+        })
+        break
+      }
+      case 403: {
+        toast.open({
+          title: '发生了什么？',
+          body: '知道吗，那不是你应该来的地方',
+          color: 'warning'
+        })
+        break
+      }
+    }
+  })
 </script>
 
 <Form on:submit={handleLogin} class="d-grid p-4 gap-3 border rounded bg-white">
