@@ -12,6 +12,11 @@ export const dateFormat = (date: Date, divider?: string): string => {
   return divider ? `${year}${divider}${month}${divider}${day}` : `${year} 年 ${month} 月 ${day} 日`
 }
 
+export const dateFormatInput = (date: Date): string => {
+  const { year, month, day } = getTime(date)
+  return `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`
+}
+
 export const dateFormatWeek = (date: Date): string => {
   const { year, month, day, week } = getTime(date)
   return `${year} 年 ${month} 月 ${day} 日，${weekMap(week)}`

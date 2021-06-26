@@ -53,3 +53,7 @@
 .gridjs .gridjs-table {
   width: 100%;
 }
+
+.modal-md {
+  max-width: 450px !important;
+}

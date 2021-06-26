@@ -53,9 +53,9 @@
   ]
 
   const setCurrentUser = (row: Row) => {
-    const id = Number(row.cells[0].data)
+    const id = row.cells[0].data as string
     const name = row.cells[1].data as string
-    const role = Number(row.cells[2].data)
+    const role = row.cells[2].data as string
     currentUser.set({ id, name, role })
   }
 

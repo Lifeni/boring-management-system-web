@@ -25,6 +25,11 @@ interface IStudentResponse {
   collegeName: string
 }
 
+interface ICollegeResponse {
+  collegeId: number
+  collegeName: string
+}
+
 interface ILoginRequest {
   username: string
   password: string
@@ -53,17 +58,25 @@ type ModalStore = {
 
 type UserInfo = {
   name: string
-  id: number
-  role: number
+  id: string
+  role: string
 }
 
 type StudentInfo = {
-  id: number
+  id: string
   name: string
   sex: string
   birth: string
   grade: string
-  college: string
+  college: {
+    name: string
+    id: string
+  }
+}
+
+type CollegeInfo = {
+  name: string
+  id: string
 }
 
 type Colors = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'

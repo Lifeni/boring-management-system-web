@@ -9,4 +9,5 @@
 <div class="w-100 vh-100 px-5 py-4">
   <slot />
 </div>
+
 <Toast />

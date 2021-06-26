@@ -10,7 +10,7 @@
   $: grid?.instance.updateConfig({ data }).forceRender()
 </script>
 
-<div class="p-5" in:fade={{ duration: 200 }}>
+<div class="py-4 px-0 px-lg-5" in:fade={{ duration: 200 }}>
   <div class="grid-tools">
     <slot />
   </div>

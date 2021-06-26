@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { toastModel, userModel } from './models'
+import { collegeModel, toastModel, userModel } from './models'
 
 const createIsLogged = () => {
   const { subscribe, set } = writable(false)
@@ -20,8 +20,8 @@ const createUserInfo = () => {
     subscribe,
     login: (data: IUserResponse) =>
       set({
-        id: data.userId,
-        role: data.role,
+        id: data.userId.toString(),
+        role: data.role.toString(),
         name: data.userName
       }),
     logout: () => set(userModel)
@@ -29,6 +29,23 @@ const createUserInfo = () => {
 }
 
 export const userInfo = createUserInfo()
+
+const createCollegeList = () => {
+  const { subscribe, set } = writable([collegeModel])
+
+  return {
+    subscribe,
+    create: (data: Array<ICollegeResponse>) =>
+      set(
+        data.map((d) => ({
+          id: d.collegeId.toString(),
+          name: d.collegeName
+        }))
+      )
+  }
+}
+
+export const collegeList = createCollegeList()
 
 const createToast = () => {
   const { subscribe, set } = writable(toastModel)

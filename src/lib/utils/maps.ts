@@ -13,7 +13,7 @@ const week = {
   4: '星期四',
   5: '星期五',
   6: '星期六',
-  7: '星期天'
+  0: '星期天'
 }
 
 export const weekMap = (num: number): string => week[num]

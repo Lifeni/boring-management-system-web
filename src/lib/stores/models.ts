@@ -1,16 +1,24 @@
 export const userModel: UserInfo = {
-  name: null,
-  id: null,
-  role: null
+  name: '',
+  id: '',
+  role: ''
 }
 
 export const studentModel: StudentInfo = {
-  id: null,
-  name: null,
-  sex: null,
-  birth: null,
-  grade: null,
-  college: null
+  id: '',
+  name: '',
+  sex: '',
+  birth: '',
+  grade: '',
+  college: {
+    name: '',
+    id: ''
+  }
+}
+
+export const collegeModel: CollegeInfo = {
+  name: '',
+  id: ''
 }
 
 export const toastModel: Toast = {
