@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import Container from '$lib/components/Container.svelte'
   import Grid from '$lib/components/Grid.svelte'
   import Modal from '$lib/components/Modal.svelte'
@@ -98,7 +97,7 @@
 <Container>
   {#if students}
     <Grid {columns} data={students}>
-      <Button color="success" class="me-2.5" on:click={() => goto('/学生管理/新建')}>
+      <Button color="success" class="me-2.5" on:click={() => {}}>
         <Icon name="person-plus" class="me-2" />
         新建学生信息
       </Button>

@@ -22,7 +22,6 @@
         isLogged.login()
         userInfo.login(res.data)
         goto('/')
-        isLoading.set(true)
       })
       .catch(() => (status = 'error'))
   }
