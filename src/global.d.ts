@@ -90,4 +90,5 @@ type Action = {
   action: () => void
   color: Colors
   text: string
+  icon: string
 }

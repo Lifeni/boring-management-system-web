@@ -56,7 +56,7 @@
 </script>
 
 <Form on:submit={handleLogin} class="d-grid p-4 gap-3 border rounded bg-white">
-  <h1 class="fs-5 text-center mt-1">重置密码</h1>
+  <h1 class="fs-5 text-center mt-1">修改密码</h1>
   <Input
     id="old-password"
     name="old-password"
@@ -98,16 +98,16 @@
         {/if}
       </Button>
     {:else}
-      <Button type="submit" block color="primary" disabled={!checkPassword}>重置</Button>
+      <Button type="submit" block color="primary" disabled={!checkPassword}>修改</Button>
     {/if}
   {:else if status === 'ok'}
-    <Button type="button" href="/" block color="success">重置成功（{time} 秒后跳转）</Button>
+    <Button type="button" href="/" block color="success">修改成功（{time} 秒后跳转）</Button>
   {:else if status === 'loading'}
     <Button type="button" disabled block color="primary">
       <Spinner size="sm" />
     </Button>
   {:else if status === 'error'}
-    <Button type="button" block color="danger">重置失败</Button>
+    <Button type="button" block color="danger">修改失败</Button>
   {/if}
   <Button href="/" block outline color="primary">回到主页</Button>
 </Form>

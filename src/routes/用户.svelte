@@ -32,6 +32,7 @@
         actionWrapper(
           action({
             text: '重置密码',
+            icon: 'eraser',
             action: () => {
               setCurrentUser(row)
               resetPasswordModal.open()
@@ -40,6 +41,7 @@
           }),
           action({
             text: '删除',
+            icon: 'person-x',
             action: () => {
               setCurrentUser(row)
               deleteUserModal.open()

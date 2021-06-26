@@ -32,6 +32,7 @@
         actionWrapper(
           action({
             text: '编辑学生信息',
+            icon: 'person',
             action: () => {
               setCurrentStudent(row)
             },
@@ -39,6 +40,7 @@
           }),
           action({
             text: '删除',
+            icon: 'person-x',
             action: () => {
               setCurrentStudent(row)
               deleteStudentModal.open()

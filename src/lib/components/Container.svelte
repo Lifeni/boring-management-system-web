@@ -3,8 +3,8 @@
   import { isLoading, isLogged } from '$lib/stores/writable'
   import { checkAuth } from '$lib/utils/check-auth'
   import { onMount } from 'svelte'
-  import { fade } from 'svelte/transition'
-  import { Col, Container, Row, Spinner } from 'sveltestrap'
+  import { Col, Container, Row } from 'sveltestrap'
+  import Auth from './Auth.svelte'
 
   if (!$isLogged) {
     isLoading.set(true)
@@ -18,22 +18,17 @@
   })
 </script>
 
-{#if !$isLogged || $isLoading}
-  <div class="loading-screen" out:fade={{ duration: 200 }}>
-    <Spinner color="primary" class="mt-4 mb-2" />
-    <p class="fs-6 py-2 text-muted">正在加载</p>
-  </div>
-{:else}
+<Auth>
   <Container fluid class="d-flex flex-column h-100">
     <Row>
       <Col><Header /></Col>
     </Row>
     <Row class="flex-fill">
       <Col>
-        <main class="position-relative w-100 h-100">
+        <main class="position-relative w-100 h-100 d-flex flex-column justify-content-center">
           <slot />
         </main>
       </Col>
     </Row>
   </Container>
-{/if}
+</Auth>

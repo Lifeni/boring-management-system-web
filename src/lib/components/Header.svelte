@@ -68,9 +68,9 @@
         ID {$userInfo.id} （{roleMap($userInfo.role)}）
       </DropdownItem>
       <DropdownItem divider />
-      <DropdownItem href="/重置密码" class="fs-7">
+      <DropdownItem href="/修改密码" class="fs-7">
         <Icon name="shield-lock" class="pe-2" />
-        重置密码
+        修改密码
       </DropdownItem>
       <DropdownItem on:click={handleLogout} class="fs-7">
         <Icon name="door-closed" class="pe-2" />
