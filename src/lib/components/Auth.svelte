@@ -5,15 +5,13 @@
   import { fade } from 'svelte/transition'
   import { Spinner } from 'sveltestrap'
 
-  if (!$isLogged) {
-    isLoading.set(true)
-  }
+  isLoading.set(true)
 
   onMount(async () => {
     if (!$isLogged) {
       await checkAuth()
-      isLoading.set(false)
     }
+    isLoading.set(false)
   })
 </script>
 

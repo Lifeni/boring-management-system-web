@@ -59,14 +59,16 @@
   }
 
   const resetPassword = () => {
-    post<IResetPasswordRequestByAdmin, IBaseMessage | boolean>(
+    post<IResetPasswordByAdminRequest, IBaseMessage | boolean>(
       `/api/users/${$currentUser.id}/reset-password`,
       { password: resetPasswordInput }
     ).then((result) => {
       if (result) {
         toast.open({
-          title: '操作成功',
-          body: `成功重置用户「${$currentUser.name}」的密码`
+          title: '重置成功',
+          body: `成功重置用户「${$currentUser.name}」的密码`,
+          color: 'success',
+          type: 'ok'
         })
         resetPasswordModal.close()
       }
@@ -78,8 +80,10 @@
       if (result) {
         fetchUsers()
         toast.open({
-          title: '操作成功',
-          body: `成功删除用户「${$currentUser.name}」的账号`
+          title: '删除成功',
+          body: `成功删除用户「${$currentUser.name}」的账号`,
+          color: 'success',
+          type: 'ok'
         })
         deleteUserModal.close()
       }

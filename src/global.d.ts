@@ -46,14 +46,31 @@ interface IResetPasswordRequest {
   newPassword: string
 }
 
-interface IResetPasswordRequestByAdmin {
+interface IResetPasswordByAdminRequest {
   password: string
+}
+
+interface IAddStudentRequest {
+  userId: number
+  userName: string
+  sex: string
+  birthYear: string
+  grade: string
+  collegeId: number
+}
+
+interface IEditStudentRequest {
+  userName: string
+  sex: string
+  birthYear: string
+  grade: string
+  collegeId: number
 }
 
 type ModalStore = {
   subscribe: (this: void, run: Subscriber<Toast>, invalidate?: Invalidator<Toast>) => Unsubscriber
   toggle: () => void
-  open: (text?: string, color?: Colors) => void
+  open: (type?: string, color?: Colors) => void
   close: () => void
 }
 
@@ -86,7 +103,7 @@ type Colors = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info
 
 type Modal = {
   isOpen: boolean
-  text?: string
+  type?: string
   color?: Colors
 }
 
@@ -94,6 +111,7 @@ type Toast = {
   title: string
   body: string
   color?: Colors
+  type?: 'ok' | 'error' | 'info' | ''
   isOpen?: boolean
 }
 

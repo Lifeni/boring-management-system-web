@@ -54,10 +54,11 @@ body {
   position: relative;
   width: fit-content;
   z-index: 10;
-  margin: 0 0 -3.25rem 0;
+  margin: 0.75rem 0 -4rem 0;
   padding: 2px;
   display: flex;
   justify-content: flex-start;
+  float: left;
 }
 
 .action-wrapper {

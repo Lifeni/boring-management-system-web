@@ -27,11 +27,12 @@ export const toastModel: Toast = {
   title: '',
   body: '',
   color: 'primary',
+  type: '',
   isOpen: false
 }
 
 export const modalModel: Modal = {
   isOpen: false,
-  text: '',
+  type: '',
   color: 'primary'
 }

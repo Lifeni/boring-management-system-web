@@ -23,7 +23,8 @@ const handleResponse = async (res: Response) => {
             toast.open({
               title: `Error ${res.status}`,
               body: `获取数据出错了（${res.statusText}），检查一下吧`,
-              color: 'danger'
+              color: 'danger',
+              type: 'error'
             })
             break
           }
@@ -31,7 +32,8 @@ const handleResponse = async (res: Response) => {
             toast.open({
               title: `Error ${res.status}`,
               body: `服务器出错了（${res.statusText}），检查一下吧`,
-              color: 'danger'
+              color: 'danger',
+              type: 'error'
             })
             break
           }
@@ -54,6 +56,15 @@ export const get = async <T>(url: string): Promise<T> =>
 export const post = async <T, K>(url: string, body: T): Promise<K> =>
   fetch(url, {
     method: 'POST',
+    body: JSON.stringify(body),
+    headers: { 'content-type': 'application/json' }
+  })
+    .then(handleResponse)
+    .catch(handleError)
+
+export const put = async <T, K>(url: string, body: T): Promise<K> =>
+  fetch(url, {
+    method: 'PUT',
     body: JSON.stringify(body),
     headers: { 'content-type': 'application/json' }
   })

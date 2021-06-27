@@ -1,7 +1,11 @@
 import { readable } from 'svelte/store'
 
 export const gridOptions = readable({
-  pagination: { enabled: true, limit: 5 },
+  pagination: {
+    enabled: true,
+    limit: 5,
+    resetPageOnUpdate: false
+  },
   search: true,
   sort: true,
   resizable: true,

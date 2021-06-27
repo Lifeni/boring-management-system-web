@@ -68,7 +68,7 @@ export const createModal = (): ModalStore => {
   return {
     subscribe,
     toggle: () => update((v) => ({ isOpen: !v.isOpen })),
-    open: (text?: string, color?: Colors) => set({ isOpen: true, text, color }),
+    open: (type?: string, color?: Colors) => set({ isOpen: true, type, color }),
     close: () => set(modalModel)
   }
 }

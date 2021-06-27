@@ -4,7 +4,7 @@
   import Modal from '$lib/components/Modal.svelte'
   import { studentModel } from '$lib/stores/models'
   import { collegeList, createModal, headerText, toast } from '$lib/stores/writable'
-  import { del, get } from '$lib/utils/fetch'
+  import { del, get, post, put } from '$lib/utils/fetch'
   import { dateFormat, dateFormatInput } from '$lib/utils/format'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
   import type { TCell } from 'gridjs/dist/src/types'
@@ -15,9 +15,9 @@
   let students: Array<Array<string | number | Date>> = null
 
   const deleteStudentModal = createModal()
-  const editStudentModal = createModal()
+  const changeStudentModal = createModal()
 
-  const currentStudent = writable<StudentInfo>(studentModel)
+  const currentStudent = writable<StudentInfo>({ ...studentModel })
 
   const columns = [
     { name: '学生 ID' },
@@ -37,7 +37,7 @@
             icon: 'person',
             action: () => {
               setCurrentStudent(row)
-              editStudentModal.open('修改', 'primary')
+              changeStudentModal.open('修改', 'primary')
             },
             color: 'primary'
           }),
@@ -69,17 +69,67 @@
   }
 
   const deleteStudent = () => {
-    del<IBaseMessage | boolean>(`/api/student/${$currentStudent.id}/`).then((result) => {
+    del<IBaseMessage | boolean>(`/api/students/${$currentStudent.id}/`).then((result) => {
       if (result) {
         fetchStudents()
         toast.open({
-          title: '操作成功',
+          title: '删除成功',
           body: `成功删除学生「${$currentStudent.name}」的账号`,
-          color: 'danger'
+          color: 'success',
+          type: 'ok'
         })
         deleteStudentModal.close()
       }
     })
+  }
+
+  const changeStudent = () => {
+    switch ($changeStudentModal.type) {
+      case '新建': {
+        post<IAddStudentRequest, IBaseMessage | boolean>(`/api/students/`, {
+          userId: Number($currentStudent.id),
+          userName: $currentStudent.name,
+          sex: $currentStudent.sex,
+          birthYear: $currentStudent.birth,
+          grade: $currentStudent.grade,
+          collegeId: Number($currentStudent.college.id)
+        }).then((result) => {
+          if (result) {
+            fetchStudents()
+            toast.open({
+              title: '添加成功',
+              body: `成功添加学生「${$currentStudent.name}」的信息`,
+              color: 'success',
+              type: 'ok'
+            })
+            changeStudentModal.close()
+          }
+        })
+        break
+      }
+
+      case '修改': {
+        put<IEditStudentRequest, IBaseMessage | boolean>(`/api/students/${$currentStudent.id}/`, {
+          userName: $currentStudent.name,
+          sex: $currentStudent.sex,
+          birthYear: $currentStudent.birth,
+          grade: $currentStudent.grade,
+          collegeId: Number($currentStudent.college.id)
+        }).then((result) => {
+          if (result) {
+            fetchStudents()
+            toast.open({
+              title: '修改成功',
+              body: `成功修改学生「${$currentStudent.name}」的信息`,
+              color: 'success',
+              type: 'ok'
+            })
+            changeStudentModal.close()
+          }
+        })
+        break
+      }
+    }
   }
 
   const fetchStudents = () => {
@@ -120,8 +170,8 @@
         color="success"
         class="me-2.5"
         on:click={() => {
-          editStudentModal.open('新建', 'success')
           currentStudent.set(studentModel)
+          changeStudentModal.open('新建', 'success')
         }}
       >
         <Icon name="person-plus" class="me-2" />
@@ -144,8 +194,8 @@
       </div>
     </Modal>
 
-    <Modal isOpen={$editStudentModal.isOpen} toggle={editStudentModal.toggle} size="md">
-      <div slot="header">{$editStudentModal.text}学生信息</div>
+    <Modal isOpen={$changeStudentModal.isOpen} toggle={changeStudentModal.toggle} size="md">
+      <div slot="header">{$changeStudentModal.type}学生信息</div>
       <div slot="body">
         <Form class="px-3 pt-3">
           <FormGroup>
@@ -156,7 +206,7 @@
               <Col xs="8">
                 <Input
                   type="number"
-                  disabled={!!$currentStudent.id}
+                  disabled={$changeStudentModal.type === '修改'}
                   bind:value={$currentStudent.id}
                   placeholder="学生 ID"
                 />
@@ -227,7 +277,10 @@
                 <Label class="m-0">院系</Label>
               </Col>
               <Col xs="8">
-                <Input type="select" name="college-select">
+                <Input type="select" name="college-select" bind:value={$currentStudent.college.id}>
+                  <option value="0" selected={$currentStudent.college.id === ''}>
+                    未选择院系
+                  </option>
                   {#each $collegeList as college}
                     <option value={college.id} selected={college.id === $currentStudent.college.id}>
                       {college.name}
@@ -240,8 +293,8 @@
         </Form>
       </div>
       <div slot="footer">
-        <Button color={$editStudentModal.color || 'primary'} on:click={deleteStudent}>
-          {$editStudentModal.text}
+        <Button color={$changeStudentModal.color || 'primary'} on:click={changeStudent}>
+          {$changeStudentModal.type}
         </Button>
       </div>
     </Modal>
