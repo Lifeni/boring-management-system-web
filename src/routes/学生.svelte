@@ -83,7 +83,8 @@
     })
   }
 
-  const changeStudent = () => {
+  const changeStudent = (e: Event) => {
+    e.preventDefault()
     switch ($changeStudentModal.type) {
       case '新建': {
         post<IAddStudentRequest, IBaseMessage | boolean>(`/api/students/`, {
@@ -197,7 +198,7 @@
     <Modal isOpen={$changeStudentModal.isOpen} toggle={changeStudentModal.toggle} size="md">
       <div slot="header">{$changeStudentModal.type}学生信息</div>
       <div slot="body">
-        <Form class="px-3 pt-3">
+        <Form class="px-3 pt-3" on:submit={changeStudent} id="change-student">
           <FormGroup>
             <Row class="d-flex align-items-center">
               <Col xs="4">
@@ -208,7 +209,7 @@
                   type="number"
                   disabled={$changeStudentModal.type === '修改'}
                   bind:value={$currentStudent.id}
-                  placeholder="学生 ID"
+                  placeholder="学生 ID（自动 +1）"
                 />
               </Col>
             </Row>
@@ -222,6 +223,7 @@
               <Col xs="8">
                 <Input
                   type="text"
+                  required
                   bind:value={$currentStudent.name}
                   placeholder={$currentStudent.name || '学生姓名'}
                 />
@@ -293,7 +295,7 @@
         </Form>
       </div>
       <div slot="footer">
-        <Button color={$changeStudentModal.color || 'primary'} on:click={changeStudent}>
+        <Button color={$changeStudentModal.color || 'primary'} form="change-student">
           {$changeStudentModal.type}
         </Button>
       </div>

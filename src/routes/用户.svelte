@@ -9,7 +9,7 @@
   import type { TCell } from 'gridjs/dist/src/types'
   import { onMount } from 'svelte'
   import { writable } from 'svelte/store'
-  import { Button, Icon, Input } from 'sveltestrap'
+  import { Button, Form, Icon, Input } from 'sveltestrap'
 
   let users: Array<Array<string | number>> = null
 
@@ -34,6 +34,7 @@
             icon: 'eraser',
             action: () => {
               setCurrentUser(row)
+              resetPasswordInput = ''
               resetPasswordModal.open()
             },
             color: 'warning'
@@ -58,7 +59,8 @@
     currentUser.set({ id, name, role })
   }
 
-  const resetPassword = () => {
+  const resetPassword = (e: Event) => {
+    e.preventDefault()
     post<IResetPasswordByAdminRequest, IBaseMessage | boolean>(
       `/api/users/${$currentUser.id}/reset-password`,
       { password: resetPasswordInput }
@@ -127,17 +129,20 @@
     <Modal isOpen={$resetPasswordModal.isOpen} toggle={resetPasswordModal.toggle}>
       <div slot="header">重置用户密码</div>
       <div slot="body">
-        将会重置 <strong>{$currentUser.name}</strong> 的密码
-        <Input
-          class="mt-3"
-          type="text"
-          placeholder="输入新的密码"
-          autofocus
-          bind:value={resetPasswordInput}
-        />
+        <Form on:submit={resetPassword} id="reset-password">
+          将会重置 <strong>{$currentUser.name}</strong> 的密码，请在下面输入新的密码
+          <Input
+            class="mt-3"
+            type="text"
+            required
+            placeholder="输入新的密码"
+            autofocus
+            bind:value={resetPasswordInput}
+          />
+        </Form>
       </div>
       <div slot="footer">
-        <Button color="warning" on:click={resetPassword}>重置</Button>
+        <Button color="warning" form="reset-password">重置</Button>
       </div>
     </Modal>
   {/if}
