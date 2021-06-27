@@ -29,3 +29,9 @@ export const toastModel: Toast = {
   color: 'primary',
   isOpen: false
 }
+
+export const modalModel: Modal = {
+  isOpen: false,
+  text: '',
+  color: 'primary'
+}

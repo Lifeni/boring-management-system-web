@@ -2,7 +2,7 @@
   import Container from '$lib/components/Container.svelte'
   import Grid from '$lib/components/Grid.svelte'
   import Modal from '$lib/components/Modal.svelte'
-  import { collegeModel, studentModel } from '$lib/stores/models'
+  import { studentModel } from '$lib/stores/models'
   import { collegeList, createModal, headerText, toast } from '$lib/stores/writable'
   import { del, get } from '$lib/utils/fetch'
   import { dateFormat, dateFormatInput } from '$lib/utils/format'
@@ -37,7 +37,7 @@
             icon: 'person',
             action: () => {
               setCurrentStudent(row)
-              editStudentModal.open()
+              editStudentModal.open('修改', 'primary')
             },
             color: 'primary'
           }),
@@ -120,7 +120,7 @@
         color="success"
         class="me-2.5"
         on:click={() => {
-          editStudentModal.open()
+          editStudentModal.open('新建', 'success')
           currentStudent.set(studentModel)
         }}
       >
@@ -133,7 +133,7 @@
       </Button>
     </Grid>
 
-    <Modal isOpen={$deleteStudentModal} toggle={deleteStudentModal.toggle}>
+    <Modal isOpen={$deleteStudentModal.isOpen} toggle={deleteStudentModal.toggle}>
       <div slot="header">删除学生</div>
       <div slot="body">
         将会删除 <strong>{$currentStudent.name}</strong> 的所有信息，此操作
@@ -144,8 +144,8 @@
       </div>
     </Modal>
 
-    <Modal isOpen={$editStudentModal} toggle={editStudentModal.toggle} size="md">
-      <div slot="header">修改学生信息</div>
+    <Modal isOpen={$editStudentModal.isOpen} toggle={editStudentModal.toggle} size="md">
+      <div slot="header">{$editStudentModal.text}学生信息</div>
       <div slot="body">
         <Form class="px-3 pt-3">
           <FormGroup>
@@ -240,7 +240,9 @@
         </Form>
       </div>
       <div slot="footer">
-        <Button color="primary" on:click={deleteStudent}>修改</Button>
+        <Button color={$editStudentModal.color || 'primary'} on:click={deleteStudent}>
+          {$editStudentModal.text}
+        </Button>
       </div>
     </Modal>
   {/if}

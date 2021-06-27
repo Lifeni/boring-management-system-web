@@ -14,7 +14,6 @@
   let users: Array<Array<string | number>> = null
 
   let deleteUserModal = createModal()
-
   let resetPasswordModal = createModal()
   let resetPasswordInput = ''
 
@@ -110,7 +109,7 @@
       </Button>
     </Grid>
 
-    <Modal isOpen={$deleteUserModal} toggle={deleteUserModal.toggle}>
+    <Modal isOpen={$deleteUserModal.isOpen} toggle={deleteUserModal.toggle}>
       <div slot="header">删除用户</div>
       <div slot="body">
         将会删除 <strong>{$currentUser.name}</strong> 的所有信息，此操作
@@ -121,7 +120,7 @@
       </div>
     </Modal>
 
-    <Modal isOpen={$resetPasswordModal} toggle={resetPasswordModal.toggle}>
+    <Modal isOpen={$resetPasswordModal.isOpen} toggle={resetPasswordModal.toggle}>
       <div slot="header">重置用户密码</div>
       <div slot="body">
         将会重置 <strong>{$currentUser.name}</strong> 的密码

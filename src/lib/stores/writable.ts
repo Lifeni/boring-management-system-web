@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { collegeModel, toastModel, userModel } from './models'
+import { collegeModel, modalModel, toastModel, userModel } from './models'
 
 const createIsLogged = () => {
   const { subscribe, set } = writable(false)
@@ -63,13 +63,13 @@ const createToast = () => {
 export const toast = createToast()
 
 export const createModal = (): ModalStore => {
-  const { subscribe, set, update } = writable(false)
+  const { subscribe, set, update } = writable<Modal>(modalModel)
 
   return {
     subscribe,
-    toggle: () => update((v) => !v),
-    open: () => set(true),
-    close: () => set(false)
+    toggle: () => update((v) => ({ isOpen: !v.isOpen })),
+    open: (text?: string, color?: Colors) => set({ isOpen: true, text, color }),
+    close: () => set(modalModel)
   }
 }
 
