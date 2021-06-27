@@ -25,7 +25,7 @@
     </Row>
     <Row class="flex-fill">
       <Col>
-        <main class="position-relative w-100 h-100 d-flex flex-column justify-content-center">
+        <main class="position-relative w-100 h-100">
           <slot />
         </main>
       </Col>

@@ -31,7 +31,7 @@
   }
 </script>
 
-<header class="d-flex py-2 align-items-center justify-content-between w-100">
+<header class="d-flex py-3 align-items-center justify-content-between w-100">
   <Nav pills class="d-flex flex-fill align-items-center">
     <h1 class="fs-5 m-0 pe-5 header-text">{$headerText}</h1>
     {#each getNav(Number($userInfo.role.id)) as nav}
@@ -57,24 +57,26 @@
       </NavLink>
     </NavItem>
   </Nav>
-  <Dropdown>
-    <DropdownToggle caret outline color="primary">
-      <Icon name="person-circle" class="align-middle pe-2" />
-      <span class="align-middle">{$userInfo.name}</span>
-    </DropdownToggle>
-    <DropdownMenu>
-      <DropdownItem header>
-        ID {$userInfo.id} （{$userInfo.role.name}）
-      </DropdownItem>
-      <DropdownItem divider />
-      <DropdownItem href="/修改密码" class="fs-7">
-        <Icon name="shield-lock" class="pe-2" />
-        修改密码
-      </DropdownItem>
-      <DropdownItem on:click={handleLogout} class="fs-7">
-        <Icon name="door-closed" class="pe-2" />
-        退出登录
-      </DropdownItem>
-    </DropdownMenu>
-  </Dropdown>
+  {#if $page.path !== '/'}
+    <Dropdown>
+      <DropdownToggle caret outline color="primary" class="d-flex align-items-center">
+        <Icon name="person-circle" class="align-middle pe-2" />
+        <span class="align-middle mx-1">{$userInfo.name}</span>
+      </DropdownToggle>
+      <DropdownMenu>
+        <DropdownItem header class="fs-6">
+          ID {$userInfo.id} （{$userInfo.role.name}）
+        </DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem href="/修改密码">
+          <Icon name="shield-lock" class="pe-2" />
+          修改密码
+        </DropdownItem>
+        <DropdownItem on:click={handleLogout}>
+          <Icon name="door-closed" class="pe-2" />
+          退出登录
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  {/if}
 </header>

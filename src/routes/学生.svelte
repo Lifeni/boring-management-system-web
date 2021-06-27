@@ -237,7 +237,7 @@
               <Col xs="4">
                 <Label class="m-0">性别</Label>
               </Col>
-              <Col xs="8" class="d-flex flex-row gap-3">
+              <Col xs="8" class="d-flex flex-row gap-3 py-1.5">
                 <Input type="radio" bind:group={$currentStudent.sex} label="男" value="男" />
                 <Input type="radio" bind:group={$currentStudent.sex} label="女" value="女" />
               </Col>

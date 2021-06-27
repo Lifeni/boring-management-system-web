@@ -55,7 +55,7 @@
   })
 </script>
 
-<Form on:submit={handleLogin} class="d-grid p-4 gap-3 border rounded bg-white">
+<Form on:submit={handleLogin} class="d-grid w-25 p-4 gap-3 border rounded bg-white">
   <h1 class="fs-5 text-center mt-1">修改密码</h1>
   <Input
     id="old-password"
