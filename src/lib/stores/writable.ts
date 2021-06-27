@@ -21,8 +21,11 @@ const createUserInfo = () => {
     login: (data: IUserResponse) =>
       set({
         id: data.userId.toString(),
-        role: data.role.toString(),
-        name: data.userName
+        name: data.userName,
+        role: {
+          id: data.roleId.toString(),
+          name: data.roleName
+        }
       }),
     logout: () => set(userModel)
   }

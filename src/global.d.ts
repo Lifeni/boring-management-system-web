@@ -11,8 +11,9 @@ interface IDataMessage<T> {
 
 interface IUserResponse {
   userId: number
-  role: number
+  roleId: number
   userName: string
+  roleName: string
 }
 
 interface IStudentResponse {
@@ -59,7 +60,17 @@ type ModalStore = {
 type UserInfo = {
   name: string
   id: string
-  role: string
+  role: RoleInfo
+}
+
+type CollegeInfo = {
+  name: string
+  id: string
+}
+
+type RoleInfo = {
+  name: string
+  id: string
 }
 
 type StudentInfo = {
@@ -68,15 +79,7 @@ type StudentInfo = {
   sex: string
   birth: string
   grade: string
-  college: {
-    name: string
-    id: string
-  }
-}
-
-type CollegeInfo = {
-  name: string
-  id: string
+  college: CollegeInfo
 }
 
 type Colors = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'

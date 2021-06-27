@@ -18,7 +18,7 @@
 
     status = 'loading'
     post<IResetPasswordRequest, IBaseMessage>('/api/auth/reset-password', {
-      userId: $userInfo.id,
+      userId: Number($userInfo.id),
       oldPassword: oldPassword,
       newPassword: newPassword
     })

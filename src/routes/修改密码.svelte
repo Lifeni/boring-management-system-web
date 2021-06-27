@@ -2,7 +2,6 @@
   import Auth from '$lib/components/Auth.svelte'
   import ResetPasswordBox from '$lib/components/ResetPasswordBox.svelte'
   import { userInfo } from '$lib/stores/writable'
-  import { roleMap } from '$lib/utils/maps'
 </script>
 
 <svelte:head>
@@ -14,7 +13,7 @@
     <section class="text-center">
       <h1 class="fs-2">修改「{$userInfo.name}」的密码</h1>
       <p class="fs-5 mb-3">
-        <code>ID {$userInfo.id} | {roleMap($userInfo.role)}</code>
+        <code>ID {$userInfo.id} | {$userInfo.role.name}</code>
       </p>
     </section>
     <ResetPasswordBox />

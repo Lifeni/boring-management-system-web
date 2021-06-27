@@ -3,7 +3,6 @@
   import { page } from '$app/stores'
   import { headerText, isLogged, userInfo } from '$lib/stores/writable'
   import { post } from '$lib/utils/fetch'
-  import { roleMap } from '$lib/utils/maps'
   import { getNav } from '$lib/utils/nav-links'
   import {
     Dropdown,
@@ -22,7 +21,7 @@
       : decodeURIComponent($page.path).startsWith(url)
 
   const handleLogout = () => {
-    post<ILogoutRequest, void>('/api/auth/logout', { id: $userInfo.id })
+    post<ILogoutRequest, void>('/api/auth/logout', { id: Number($userInfo.id) })
       .catch(() => {})
       .finally(() => {
         goto('/登录')
@@ -35,7 +34,7 @@
 <header class="d-flex py-2 align-items-center justify-content-between w-100">
   <Nav pills class="d-flex flex-fill align-items-center">
     <h1 class="fs-5 m-0 pe-5 header-text">{$headerText}</h1>
-    {#each getNav($userInfo.role) as nav}
+    {#each getNav(Number($userInfo.role.id)) as nav}
       <NavItem>
         {#if isCurrentPage(nav.url)}
           <NavLink class="mx-3" href={nav.url} active>
@@ -65,7 +64,7 @@
     </DropdownToggle>
     <DropdownMenu>
       <DropdownItem header>
-        ID {$userInfo.id} （{roleMap($userInfo.role)}）
+        ID {$userInfo.id} （{$userInfo.role.name}）
       </DropdownItem>
       <DropdownItem divider />
       <DropdownItem href="/修改密码" class="fs-7">

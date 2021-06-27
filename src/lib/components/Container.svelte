@@ -24,7 +24,7 @@
       <Col><Header /></Col>
     </Row>
     <Row class="flex-fill">
-      <Col class="p-0">
+      <Col>
         <main class="position-relative w-100 h-100 d-flex flex-column justify-content-center">
           <slot />
         </main>

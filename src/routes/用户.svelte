@@ -5,7 +5,6 @@
   import { createModal, headerText, toast } from '$lib/stores/writable'
   import { del, get, post } from '$lib/utils/fetch'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
-  import { roleMap } from '$lib/utils/maps'
   import type Row from 'gridjs/dist/src/row'
   import type { TCell } from 'gridjs/dist/src/types'
   import { onMount } from 'svelte'
@@ -25,6 +24,7 @@
     { name: '用户 ID' },
     { name: '用户名' },
     { name: '用户身份' },
+    { name: '用户身份 ID', hidden: true },
     {
       name: '操作',
       sort: { enabled: false },
@@ -55,7 +55,7 @@
   const setCurrentUser = (row: Row) => {
     const id = row.cells[0].data as string
     const name = row.cells[1].data as string
-    const role = row.cells[2].data as string
+    const role = { name: row.cells[2].data as string, id: row.cells[3].data as string }
     currentUser.set({ id, name, role })
   }
 
@@ -89,7 +89,7 @@
 
   const fetchUsers = () => {
     get<IDataMessage<Array<IUserResponse>>>('/api/users/').then((res) => {
-      users = res?.data.map((user) => [user.userId, user.userName, roleMap(user.role)])
+      users = res?.data.map((user) => [user.userId, user.userName, user.roleName, user.roleId])
     })
   }
 

@@ -1,7 +1,17 @@
+export const roleModel: RoleInfo = {
+  name: '',
+  id: ''
+}
+
 export const userModel: UserInfo = {
   name: '',
   id: '',
-  role: ''
+  role: roleModel
+}
+
+export const collegeModel: CollegeInfo = {
+  name: '',
+  id: ''
 }
 
 export const studentModel: StudentInfo = {
@@ -10,15 +20,7 @@ export const studentModel: StudentInfo = {
   sex: '',
   birth: '',
   grade: '',
-  college: {
-    name: '',
-    id: ''
-  }
-}
-
-export const collegeModel: CollegeInfo = {
-  name: '',
-  id: ''
+  college: collegeModel
 }
 
 export const toastModel: Toast = {

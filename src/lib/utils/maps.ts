@@ -1,11 +1,3 @@
-const role = {
-  0: '管理员',
-  1: '教师',
-  2: '学生'
-}
-
-export const roleMap = (num: number): string => role[num]
-
 const week = {
   1: '星期一',
   2: '星期二',

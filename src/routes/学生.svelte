@@ -14,7 +14,6 @@
 
   let students: Array<Array<string | number | Date>> = null
 
-  const newStudentModal = createModal()
   const deleteStudentModal = createModal()
   const editStudentModal = createModal()
 
@@ -86,13 +85,13 @@
   const fetchStudents = () => {
     get<IDataMessage<Array<IStudentResponse>>>('/api/students/').then((res) => {
       students = res?.data.map((students) => [
-        students.userId,
+        students.userId.toString(),
         students.userName,
         students.sex,
         new Date(students.birthYear),
         new Date(students.grade),
         students.collegeName,
-        students.collegeId
+        students.collegeId.toString()
       ])
     })
   }
@@ -117,7 +116,14 @@
 <Container>
   {#if students}
     <Grid {columns} data={students}>
-      <Button color="success" class="me-2.5" on:click={() => {}}>
+      <Button
+        color="success"
+        class="me-2.5"
+        on:click={() => {
+          editStudentModal.open()
+          currentStudent.set(studentModel)
+        }}
+      >
         <Icon name="person-plus" class="me-2" />
         新建学生信息
       </Button>
@@ -150,7 +156,7 @@
               <Col xs="8">
                 <Input
                   type="number"
-                  disabled
+                  disabled={!!$currentStudent.id}
                   bind:value={$currentStudent.id}
                   placeholder="学生 ID"
                 />
@@ -167,7 +173,7 @@
                 <Input
                   type="text"
                   bind:value={$currentStudent.name}
-                  placeholder={$currentStudent.name}
+                  placeholder={$currentStudent.name || '学生姓名'}
                 />
               </Col>
             </Row>
@@ -221,9 +227,11 @@
                 <Label class="m-0">院系</Label>
               </Col>
               <Col xs="8">
-                <Input type="select" name="college-select" value="1">
+                <Input type="select" name="college-select">
                   {#each $collegeList as college}
-                    <option value={college.id}>{college.name}</option>
+                    <option value={college.id} selected={college.id === $currentStudent.college.id}>
+                      {college.name}
+                    </option>
                   {/each}
                 </Input>
               </Col>
