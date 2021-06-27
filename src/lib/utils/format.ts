@@ -8,11 +8,17 @@ const getTime = (date: Date) => ({
 })
 
 export const dateFormat = (date: Date, divider?: string): string => {
+  if (date.getTime() === 0) {
+    return ''
+  }
   const { year, month, day } = getTime(date)
   return divider ? `${year}${divider}${month}${divider}${day}` : `${year} 年 ${month} 月 ${day} 日`
 }
 
 export const dateFormatInput = (date: Date): string => {
+  if (date.getTime() === 0) {
+    return ''
+  }
   const { year, month, day } = getTime(date)
   return `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`
 }
