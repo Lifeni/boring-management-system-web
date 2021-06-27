@@ -14,7 +14,7 @@
 
   let students: Array<Array<string | number | Date>> = null
 
-  const deleteStudentModal = createModal()
+  const removeStudentModal = createModal()
   const changeStudentModal = createModal()
 
   const currentStudent = writable<StudentInfo>({ ...studentModel })
@@ -46,7 +46,7 @@
             icon: 'person-x',
             action: () => {
               setCurrentStudent(row)
-              deleteStudentModal.open()
+              removeStudentModal.open()
             },
             color: 'danger'
           })
@@ -68,7 +68,7 @@
     currentStudent.set({ id, name, sex, birth, grade, college })
   }
 
-  const deleteStudent = () => {
+  const removeStudent = () => {
     del<IBaseMessage | boolean>(`/api/students/${$currentStudent.id}/`).then((result) => {
       if (result) {
         fetchStudents()
@@ -78,7 +78,7 @@
           color: 'success',
           type: 'ok'
         })
-        deleteStudentModal.close()
+        removeStudentModal.close()
       }
     })
   }
@@ -171,7 +171,7 @@
         color="success"
         class="me-2.5"
         on:click={() => {
-          currentStudent.set(studentModel)
+          currentStudent.set({ ...studentModel })
           changeStudentModal.open('新建', 'success')
         }}
       >
@@ -184,14 +184,14 @@
       </Button>
     </Grid>
 
-    <Modal isOpen={$deleteStudentModal.isOpen} toggle={deleteStudentModal.toggle}>
+    <Modal isOpen={$removeStudentModal.isOpen} toggle={removeStudentModal.toggle}>
       <div slot="header">删除学生</div>
       <div slot="body">
         将会删除 <strong>{$currentStudent.name}</strong> 的所有信息，此操作
         <strong>不可撤销</strong>，请谨慎操作
       </div>
       <div slot="footer">
-        <Button color="danger" on:click={deleteStudent}>删除</Button>
+        <Button color="danger" on:click={removeStudent}>删除</Button>
       </div>
     </Modal>
 
@@ -207,9 +207,10 @@
               <Col xs="8">
                 <Input
                   type="number"
+                  required
                   disabled={$changeStudentModal.type === '修改'}
                   bind:value={$currentStudent.id}
-                  placeholder="学生 ID（自动 +1）"
+                  placeholder="学生 ID"
                 />
               </Col>
             </Row>

@@ -13,7 +13,7 @@
 
   let users: Array<Array<string | number>> = null
 
-  let deleteUserModal = createModal()
+  let removeUserModal = createModal()
   let resetPasswordModal = createModal()
   let resetPasswordInput = ''
 
@@ -21,7 +21,7 @@
 
   const columns = [
     { name: '用户 ID' },
-    { name: '用户名' },
+    { name: '用户名（学生或教师 ID）' },
     { name: '用户身份' },
     { name: '用户身份 ID', hidden: true },
     {
@@ -44,7 +44,7 @@
             icon: 'person-x',
             action: () => {
               setCurrentUser(row)
-              deleteUserModal.open()
+              removeUserModal.open()
             },
             color: 'danger'
           })
@@ -77,7 +77,7 @@
     })
   }
 
-  const deleteUser = () => {
+  const removeUser = () => {
     del<IBaseMessage | boolean>(`/api/users/${$currentUser.id}/`).then((result) => {
       if (result) {
         fetchUsers()
@@ -87,7 +87,7 @@
           color: 'success',
           type: 'ok'
         })
-        deleteUserModal.close()
+        removeUserModal.close()
       }
     })
   }
@@ -115,14 +115,14 @@
       </Button>
     </Grid>
 
-    <Modal isOpen={$deleteUserModal.isOpen} toggle={deleteUserModal.toggle}>
+    <Modal isOpen={$removeUserModal.isOpen} toggle={removeUserModal.toggle}>
       <div slot="header">删除用户</div>
       <div slot="body">
         将会删除 <strong>{$currentUser.name}</strong> 的所有信息，此操作
         <strong>不可撤销</strong>，请谨慎操作
       </div>
       <div slot="footer">
-        <Button color="danger" on:click={deleteUser}>删除</Button>
+        <Button color="danger" on:click={removeUser}>删除</Button>
       </div>
     </Modal>
 

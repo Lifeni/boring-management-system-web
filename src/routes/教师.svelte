@@ -14,7 +14,7 @@
 
   let teachers: Array<Array<string | number | Date>> = null
 
-  const deleteTeacherModal = createModal()
+  const removeTeacherModal = createModal()
   const changeTeacherModal = createModal()
 
   const currentTeacher = writable<TeacherInfo>({ ...teacherModel })
@@ -48,7 +48,7 @@
             icon: 'person-x',
             action: () => {
               setCurrentTeacher(row)
-              deleteTeacherModal.open()
+              removeTeacherModal.open()
             },
             color: 'danger'
           })
@@ -72,7 +72,7 @@
     currentTeacher.set({ id, name, sex, birth, degree, title, grade, college })
   }
 
-  const deleteTeacher = () => {
+  const removeTeacher = () => {
     del<IBaseMessage | boolean>(`/api/teachers/${$currentTeacher.id}/`).then((result) => {
       if (result) {
         fetchTeachers()
@@ -82,7 +82,7 @@
           color: 'success',
           type: 'ok'
         })
-        deleteTeacherModal.close()
+        removeTeacherModal.close()
       }
     })
   }
@@ -181,7 +181,7 @@
         color="success"
         class="me-2.5"
         on:click={() => {
-          currentTeacher.set(teacherModel)
+          currentTeacher.set({ ...teacherModel })
           changeTeacherModal.open('新建', 'success')
         }}
       >
@@ -194,14 +194,14 @@
       </Button>
     </Grid>
 
-    <Modal isOpen={$deleteTeacherModal.isOpen} toggle={deleteTeacherModal.toggle}>
+    <Modal isOpen={$removeTeacherModal.isOpen} toggle={removeTeacherModal.toggle}>
       <div slot="header">删除教师</div>
       <div slot="body">
         将会删除 <strong>{$currentTeacher.name}</strong> 的所有信息，此操作
         <strong>不可撤销</strong>，请谨慎操作
       </div>
       <div slot="footer">
-        <Button color="danger" on:click={deleteTeacher}>删除</Button>
+        <Button color="danger" on:click={removeTeacher}>删除</Button>
       </div>
     </Modal>
 
@@ -217,9 +217,10 @@
               <Col xs="8">
                 <Input
                   type="number"
+                  required
                   disabled={$changeTeacherModal.type === '修改'}
                   bind:value={$currentTeacher.id}
-                  placeholder="教师 ID（自动 +1）"
+                  placeholder="教师 ID"
                 />
               </Col>
             </Row>
