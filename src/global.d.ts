@@ -26,6 +26,18 @@ interface IStudentResponse {
   collegeName: string
 }
 
+interface ITeacherResponse {
+  userId: number
+  userName: string
+  sex: string
+  birthYear: string
+  degree: string
+  title: string
+  grade: string
+  collegeId: number
+  collegeName: string
+}
+
 interface ICollegeResponse {
   collegeId: number
   collegeName: string
@@ -67,6 +79,27 @@ interface IEditStudentRequest {
   collegeId: number
 }
 
+interface IAddTeacherRequest {
+  userId: number
+  userName: string
+  sex: string
+  birthYear: string
+  degree: string
+  title: string
+  grade: string
+  collegeId: number
+}
+
+interface IEditTeacherRequest {
+  userName: string
+  sex: string
+  birthYear: string
+  degree: string
+  title: string
+  grade: string
+  collegeId: number
+}
+
 type ModalStore = {
   subscribe: (this: void, run: Subscriber<Toast>, invalidate?: Invalidator<Toast>) => Unsubscriber
   toggle: () => void
@@ -95,6 +128,17 @@ type StudentInfo = {
   name: string
   sex: string
   birth: string
+  grade: string
+  college: CollegeInfo
+}
+
+type TeacherInfo = {
+  id: string
+  name: string
+  sex: string
+  birth: string
+  degree: string
+  title: string
   grade: string
   college: CollegeInfo
 }

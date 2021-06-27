@@ -23,6 +23,17 @@ export const studentModel: StudentInfo = {
   college: collegeModel
 }
 
+export const teacherModel: TeacherInfo = {
+  id: '',
+  name: '',
+  sex: '',
+  birth: '',
+  degree: '',
+  title: '',
+  grade: '',
+  college: collegeModel
+}
+
 export const toastModel: Toast = {
   title: '',
   body: '',
