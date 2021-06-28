@@ -20,6 +20,7 @@ interface ICourseResponse {
   courseId: number
   courseName: string
   teacherId: number
+  teacherName: number
   courseTime: string
   classRoom: string
   courseWeek: number
@@ -159,15 +160,20 @@ type RoleInfo = {
   id: string
 }
 
+type CourseTeacherInfo = {
+  id: string
+  name: string
+}
+
 type CourseInfo = {
   id: string
   name: string
-  teacher: string
+  teacher: CourseTeacherInfo
   time: string
   room: string
   week: string
   type: string
-  college: string
+  college: CollegeInfo
   score: string
 }
 

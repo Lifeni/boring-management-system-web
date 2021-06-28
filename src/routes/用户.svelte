@@ -99,11 +99,11 @@
   }
 
   onMount(() => fetchUsers())
-  headerText.set('用户账户管理')
+  headerText.set('用户管理（管理员）')
 </script>
 
 <svelte:head>
-  <title>用户账户管理</title>
+  <title>用户管理（管理员）</title>
 </svelte:head>
 
 <Container>
@@ -111,7 +111,7 @@
     <Grid {columns} data={users}>
       <Button color="primary" on:click={() => fetchUsers()}>
         <Icon name="arrow-clockwise" />
-        刷新数据
+        刷新
       </Button>
     </Grid>
 

@@ -16,9 +16,7 @@
   } from 'sveltestrap'
 
   $: isCurrentPage = (url: string) =>
-    url === '/'
-      ? '/' === decodeURIComponent($page.path)
-      : decodeURIComponent($page.path).startsWith(url)
+    decodeURIComponent($page.path + window.location.search).endsWith(url)
 
   const handleLogout = () => {
     post<ILogoutRequest, void>('/api/auth/logout', { id: Number($userInfo.id) })

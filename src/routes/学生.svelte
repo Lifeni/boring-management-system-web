@@ -33,7 +33,7 @@
       formatter: (_: TCell, row: Row) =>
         actionWrapper(
           action({
-            text: '修改学生信息',
+            text: '修改',
             icon: 'person',
             action: () => {
               setCurrentStudent(row)
@@ -157,11 +157,11 @@
     fetchStudents()
     fetchColleges()
   })
-  headerText.set('学生信息管理')
+  headerText.set('学生管理（管理员）')
 </script>
 
 <svelte:head>
-  <title>学生信息管理</title>
+  <title>学生管理（管理员）</title>
 </svelte:head>
 
 <Container>
@@ -176,11 +176,11 @@
         }}
       >
         <Icon name="person-plus" class="me-2" />
-        新建学生信息
+        添加学生
       </Button>
       <Button color="primary" on:click={() => fetchStudents()}>
         <Icon name="arrow-clockwise" class="me-2" />
-        刷新数据
+        刷新
       </Button>
     </Grid>
 

@@ -12,12 +12,18 @@ export const userModel: UserInfo = {
 export const courseModel: CourseInfo = {
   id: '',
   name: '',
-  teacher: '',
+  teacher: {
+    id: '',
+    name: ''
+  },
   time: '',
   room: '',
   week: '',
   type: '',
-  college: '',
+  college: {
+    id: '',
+    name: ''
+  },
   score: ''
 }
 

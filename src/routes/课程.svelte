@@ -21,6 +21,7 @@
   const columns = [
     { name: 'ID' },
     { name: '课程名称' },
+    { name: '教师 ID', hidden: true },
     { name: '教师' },
     { name: '时间' },
     { name: '地点' },
@@ -37,8 +38,8 @@
           case 0: {
             return actionWrapper(
               action({
-                text: '修改课程信息',
-                icon: 'person',
+                text: '修改',
+                icon: 'calendar2-week',
                 action: () => {
                   setCurrentCourse(row)
                   changeCourseModal.open('修改', 'primary')
@@ -47,7 +48,7 @@
               }),
               action({
                 text: '删除',
-                icon: 'person-x',
+                icon: 'calendar2-x',
                 action: () => {
                   setCurrentCourse(row)
                   removeCourseModal.open()
@@ -60,7 +61,7 @@
           case 1: {
             return actionWrapper(
               action({
-                text: '查看选课学生',
+                text: '查看',
                 icon: 'people',
                 action: () => {
                   // setCurrentCourse(row)
@@ -92,13 +93,13 @@
   const setCurrentCourse = (row: Row) => {
     const id = row.cells[0].data as string
     const name = row.cells[1].data as string
-    const teacher = row.cells[2].data as string
-    const time = row.cells[3].data as string
-    const room = row.cells[4].data as string
-    const week = row.cells[5].data as string
-    const type = row.cells[6].data as string
-    const score = row.cells[7].data as string
-    const college = row.cells[8].data as string
+    const teacher = { id: row.cells[2].data as string, name: row.cells[3].data as string }
+    const time = row.cells[4].data as string
+    const room = row.cells[5].data as string
+    const week = row.cells[6].data as string
+    const type = row.cells[7].data as string
+    const score = row.cells[8].data as string
+    const college = { id: row.cells[9].data as string, name: row.cells[10].data as string }
 
     currentCourse.set({ id, name, teacher, time, room, week, type, college, score })
   }
@@ -125,12 +126,12 @@
         post<IAddCourseRequest, IBaseMessage | boolean>(`/api/courses/`, {
           courseId: Number($currentCourse.id),
           courseName: $currentCourse.name,
-          teacherId: Number($currentCourse.teacher),
+          teacherId: Number($currentCourse.teacher.id),
           courseTime: $currentCourse.time,
           classRoom: $currentCourse.room,
           courseWeek: Number($currentCourse.week),
           courseType: $currentCourse.type,
-          collegeId: Number($currentCourse.college),
+          collegeId: Number($currentCourse.college.id),
           score: Number($currentCourse.score)
         }).then((result) => {
           if (result) {
@@ -150,12 +151,12 @@
       case '修改': {
         put<IEditCourseRequest, IBaseMessage | boolean>(`/api/courses/${$currentCourse.id}/`, {
           courseName: $currentCourse.name,
-          teacherId: Number($currentCourse.teacher),
+          teacherId: Number($currentCourse.teacher.id),
           courseTime: $currentCourse.time,
           classRoom: $currentCourse.room,
           courseWeek: Number($currentCourse.week),
           courseType: $currentCourse.type,
-          collegeId: Number($currentCourse.college),
+          collegeId: Number($currentCourse.college.id),
           score: Number($currentCourse.score)
         }).then((result) => {
           if (result) {
@@ -174,38 +175,39 @@
     }
   }
 
-  const fetchCourses = () => {
+  const fetchCourses = async () => {
     get<IDataMessage<Array<ICourseResponse>>>('/api/courses/').then((res) => {
       courses = res?.data.map((course) => [
         course.courseId,
         course.courseName,
         course.teacherId,
+        course.teacherName,
         course.courseTime,
         course.classRoom,
         course.courseWeek,
         course.courseType,
         course.score,
         course.collegeId.toString(),
-        $collegeList.find((c) => Number(c.id) === course.collegeId)?.name || '未知院系'
+        course.collegeName
       ])
     })
   }
 
-  const fetchColleges = () => {
+  const fetchColleges = async () => {
     get<IDataMessage<Array<ICollegeResponse>>>('/api/colleges/').then((res) => {
-      collegeList.create(res.data)
+      collegeList.create(res?.data)
     })
   }
 
-  onMount(() => {
-    fetchCourses()
-    fetchColleges()
+  onMount(async () => {
+    await fetchColleges()
+    await fetchCourses()
   })
-  headerText.set('课程信息管理')
+  headerText.set('课程管理（管理员）')
 </script>
 
 <svelte:head>
-  <title>课程信息管理</title>
+  <title>课程管理（管理员）</title>
 </svelte:head>
 
 <Container>
@@ -220,14 +222,14 @@
             changeCourseModal.open('新建', 'success')
           }}
         >
-          <Icon name="person-plus" class="me-2" />
-          新建课程信息
+          <Icon name="calendar2-check" class="me-2" />
+          新建课程
         </Button>
       {/if}
 
       <Button color="primary" on:click={() => fetchCourses()}>
         <Icon name="arrow-clockwise" class="me-2" />
-        刷新数据
+        刷新
       </Button>
     </Grid>
 
@@ -285,7 +287,7 @@
                 <Label class="m-0">教师 ID</Label>
               </Col>
               <Col xs="8">
-                <Input type="number" bind:value={$currentCourse.teacher} placeholder="教师 ID" />
+                <Input type="number" bind:value={$currentCourse.teacher.id} placeholder="教师 ID" />
               </Col>
             </Row>
           </FormGroup>
@@ -352,11 +354,12 @@
                 <Label class="m-0">院系</Label>
               </Col>
               <Col xs="8">
-                <Input type="select" name="college-select" bind:value={$currentCourse.college}>
-                  <option value="0" selected={$currentCourse.college === ''}> 未选择院系 </option>
+                <Input type="select" name="college-select" bind:value={$currentCourse.college.id}>
+                  <option value="0" selected={$currentCourse.college.id === ''}>
+                    未选择院系
+                  </option>
                   {#each $collegeList as college}
-                    {console.log(typeof college.id, typeof $currentCourse.college)}
-                    <option value={college.id} selected={college.id === $currentCourse.college}>
+                    <option value={college.id} selected={college.id === $currentCourse.college.id}>
                       {college.name}
                     </option>
                   {/each}

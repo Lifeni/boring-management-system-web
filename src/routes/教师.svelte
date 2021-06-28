@@ -35,7 +35,7 @@
       formatter: (_: TCell, row: Row) =>
         actionWrapper(
           action({
-            text: '修改教师信息',
+            text: '修改',
             icon: 'person',
             action: () => {
               setCurrentTeacher(row)
@@ -141,7 +141,7 @@
     }
   }
 
-  const fetchTeachers = () => {
+  const fetchTeachers = async () => {
     get<IDataMessage<Array<ITeacherResponse>>>('/api/teachers/').then((res) => {
       teachers = res?.data.map((teacher) => [
         teacher.userId.toString(),
@@ -157,21 +157,21 @@
     })
   }
 
-  const fetchColleges = () => {
+  const fetchColleges = async () => {
     get<IDataMessage<Array<ICollegeResponse>>>('/api/colleges/').then((res) => {
       collegeList.create(res.data)
     })
   }
 
-  onMount(() => {
-    fetchTeachers()
-    fetchColleges()
+  onMount(async () => {
+    await fetchColleges()
+    await fetchTeachers()
   })
-  headerText.set('教师信息管理')
+  headerText.set('教师管理（管理员）')
 </script>
 
 <svelte:head>
-  <title>教师信息管理</title>
+  <title>教师管理（管理员）</title>
 </svelte:head>
 
 <Container>
@@ -186,11 +186,11 @@
         }}
       >
         <Icon name="person-plus" class="me-2" />
-        新建教师信息
+        添加教师
       </Button>
       <Button color="primary" on:click={() => fetchTeachers()}>
         <Icon name="arrow-clockwise" class="me-2" />
-        刷新数据
+        刷新
       </Button>
     </Grid>
 
