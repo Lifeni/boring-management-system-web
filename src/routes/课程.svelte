@@ -6,13 +6,10 @@
   import { courseModel } from '$lib/stores/models'
   import { collegeList, createModal, headerText, toast, userInfo } from '$lib/stores/writable'
   import { del, get, patch, post, put } from '$lib/utils/fetch'
-  import { dateFormat } from '$lib/utils/format'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
-  import type { TCell, TColumn } from 'gridjs/dist/src/types'
+  import type { TCell } from 'gridjs/dist/src/types'
   import { writable } from 'svelte/store'
-  import { Button, Col, Column, Form, FormGroup, Icon, Input, Label, Row, Table } from 'sveltestrap'
-  import Gridjs from 'gridjs-svelte'
-  import { gridOptions } from '$lib/stores/readable'
+  import { Button, Col, Form, FormGroup, Icon, Input, Label, Row, Table } from 'sveltestrap'
 
   let courses: Array<CourseArray> = null
   let courseStudentList: Array<Array<string>> = null
