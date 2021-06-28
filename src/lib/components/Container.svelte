@@ -1,21 +1,7 @@
 <script lang="ts">
   import Header from '$lib/components/Header.svelte'
-  import { isLoading, isLogged } from '$lib/stores/writable'
-  import { checkAuth } from '$lib/utils/check-auth'
-  import { onMount } from 'svelte'
   import { Col, Container, Row } from 'sveltestrap'
   import Auth from './Auth.svelte'
-
-  if (!$isLogged) {
-    isLoading.set(true)
-  }
-
-  onMount(async () => {
-    if (!$isLogged) {
-      await checkAuth()
-      isLoading.set(false)
-    }
-  })
 </script>
 
 <Auth>

@@ -30,6 +30,12 @@ interface ICourseResponse {
   score: number
 }
 
+interface IStudentCourseResponse extends ICourseResponse {
+  selected: boolean
+  finished: boolean
+  mark: number
+}
+
 interface IStudentResponse {
   userId: number
   userName: string
@@ -177,6 +183,21 @@ type CourseInfo = {
   score: string
 }
 
+type StudentCourseInfo = {
+  id: string
+  name: string
+  teacher: CourseTeacherInfo
+  time: string
+  room: string
+  week: string
+  type: string
+  college: CollegeInfo
+  score: string
+  isSelected: boolean
+  isFinished: boolean
+  mark: number
+}
+
 type StudentInfo = {
   id: string
   name: string
@@ -225,8 +246,9 @@ type UserInfoStore = {
 }
 
 type Action = {
-  action: () => void
+  action?: () => void
   color: Colors
   text: string
-  icon: string
+  icon?: string
+  disabled?: boolean
 }

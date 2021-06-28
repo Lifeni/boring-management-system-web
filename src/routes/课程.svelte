@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/stores'
   import Container from '$lib/components/Container.svelte'
   import Grid from '$lib/components/Grid.svelte'
   import Modal from '$lib/components/Modal.svelte'
@@ -7,88 +8,138 @@
   import { del, get, post, put } from '$lib/utils/fetch'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
   import type { TCell } from 'gridjs/dist/src/types'
-  import { onMount } from 'svelte'
   import { writable } from 'svelte/store'
   import { Button, Col, Form, FormGroup, Icon, Input, Label, Row } from 'sveltestrap'
 
-  let courses: Array<Array<string | number | Date>> = null
+  let courses: Array<Array<string | number | Date | boolean>> = null
 
   const removeCourseModal = createModal()
   const changeCourseModal = createModal()
 
   const currentCourse = writable<CourseInfo>({ ...courseModel })
 
-  const columns = [
+  $: filter = $page.query.get('筛选') || '所有课程'
+  $: actions = {
+    name: '操作',
+    sort: { enabled: false },
+    hidden: $userInfo.role.id === '2' && filter === '已修完课程',
+    formatter: (_: TCell, row: Row) => {
+      switch ($userInfo.role.id) {
+        case '0': {
+          return actionWrapper(
+            action({
+              text: '修改',
+              icon: 'calendar2-week',
+              action: () => {
+                setCurrentCourse(row)
+                changeCourseModal.open('修改', 'primary')
+              },
+              color: 'primary'
+            }),
+            action({
+              text: '删除',
+              icon: 'calendar2-x',
+              action: () => {
+                setCurrentCourse(row)
+                removeCourseModal.open()
+              },
+              color: 'danger'
+            })
+          )
+        }
+
+        case '1': {
+          return actionWrapper(
+            action({
+              text: '查看选课学生',
+              icon: 'people',
+              action: () => {
+                // setCurrentCourse(row)
+                // changeCourseModal.open('修改', 'primary')
+              },
+              color: 'success'
+            })
+          )
+        }
+
+        case '2': {
+          const isSelected = row.cells[12].data as boolean
+          const isFinished = row.cells[13].data as boolean
+
+          if (isFinished || (isSelected && filter === '所有课程')) {
+            return actionWrapper(
+              action({
+                text: '已选',
+                icon: 'calendar2-check',
+                action: () => {},
+                color: 'success',
+                disabled: true
+              })
+            )
+          }
+
+          if (isSelected) {
+            return actionWrapper(
+              action({
+                text: '退选',
+                icon: 'calendar2-minus',
+                action: () => {},
+                color: 'danger'
+              })
+            )
+          }
+
+          return actionWrapper(
+            action({
+              text: '选课',
+              icon: 'calendar2-check',
+              action: () => {
+                const id = row.cells[0].data as string
+              },
+              color: 'success'
+            })
+          )
+        }
+      }
+    }
+  }
+
+  const common = [
     { name: 'ID' },
     { name: '课程名称' },
     { name: '教师 ID', hidden: true },
-    { name: '教师' },
+    { name: '教师', hidden: $userInfo.role.id === '1' },
     { name: '时间' },
     { name: '地点' },
     { name: '周数' },
     { name: '类型' },
     { name: '学分' },
     { name: '院系 ID', hidden: true },
-    { name: '院系' },
-    {
-      name: '操作',
-      sort: { enabled: false },
-      formatter: (_: TCell, row: Row) => {
-        switch (Number($userInfo.role.id)) {
-          case 0: {
-            return actionWrapper(
-              action({
-                text: '修改',
-                icon: 'calendar2-week',
-                action: () => {
-                  setCurrentCourse(row)
-                  changeCourseModal.open('修改', 'primary')
-                },
-                color: 'primary'
-              }),
-              action({
-                text: '删除',
-                icon: 'calendar2-x',
-                action: () => {
-                  setCurrentCourse(row)
-                  removeCourseModal.open()
-                },
-                color: 'danger'
-              })
-            )
-          }
-
-          case 1: {
-            return actionWrapper(
-              action({
-                text: '查看',
-                icon: 'people',
-                action: () => {
-                  // setCurrentCourse(row)
-                  // changeCourseModal.open('修改', 'primary')
-                },
-                color: 'success'
-              })
-            )
-          }
-
-          case 2: {
-            return actionWrapper(
-              action({
-                text: '选课',
-                icon: 'bookmark-plus',
-                action: () => {
-                  // setCurrentCourse(row)
-                  // changeCourseModal.open('修改', 'primary')
-                },
-                color: 'success'
-              })
-            )
-          }
-        }
-      }
-    }
+    { name: '院系' }
   ]
+
+  $: columns =
+    $userInfo.role.id === '2'
+      ? [
+          ...common,
+          {
+            name: '成绩',
+            hidden: filter !== '已修完课程',
+            formatter: (cell: TCell, row: Row) => {
+              return actionWrapper(
+                action({
+                  text: cell.toString(),
+                  color: 'light',
+                  disabled: true
+                })
+              )
+            }
+          },
+          { name: '是否已选课', hidden: true },
+          { name: '是否已修完', hidden: true },
+          actions
+        ]
+      : [...common, actions]
 
   const setCurrentCourse = (row: Row) => {
     const id = row.cells[0].data as string
@@ -176,21 +227,56 @@
   }
 
   const fetchCourses = async () => {
-    get<IDataMessage<Array<ICourseResponse>>>('/api/courses/').then((res) => {
-      courses = res?.data.map((course) => [
-        course.courseId,
-        course.courseName,
-        course.teacherId,
-        course.teacherName,
-        course.courseTime,
-        course.classRoom,
-        course.courseWeek,
-        course.courseType,
-        course.score,
-        course.collegeId.toString(),
-        course.collegeName
-      ])
-    })
+    const role = $userInfo.role.id
+    const user = $userInfo.id
+
+    const list = (course: ICourseResponse | IStudentCourseResponse) => [
+      course.courseId,
+      course.courseName,
+      course.teacherId,
+      course.teacherName,
+      course.courseTime,
+      course.classRoom,
+      course.courseWeek,
+      course.courseType,
+      course.score,
+      course.collegeId.toString(),
+      course.collegeName
+    ]
+
+    switch (role) {
+      case '0': {
+        const fetchUrl = '/api/courses/'
+        get<IDataMessage<Array<ICourseResponse>>>(fetchUrl).then((res) => {
+          courses = res?.data.map((course) => [...list(course)])
+        })
+        break
+      }
+      case '1': {
+        const fetchUrl = `/api/courses/teacher/${user}/`
+        get<IDataMessage<Array<ICourseResponse>>>(fetchUrl).then((res) => {
+          courses = res?.data.map((course) => [...list(course)])
+        })
+        break
+      }
+      case '2': {
+        const fetchUrl = `/api/courses/student/${user}/`
+        get<IDataMessage<Array<IStudentCourseResponse>>>(fetchUrl).then((res) => {
+          courses = res?.data
+            .map((course) => {
+              if (filter === '已选课程' && (!course.selected || course.finished)) {
+                return null
+              } else if (filter === '已修完课程' && !course.finished) {
+                return null
+              }
+
+              return [...list(course), course.mark, course.selected, course.finished]
+            })
+            .filter((r) => r !== null)
+        })
+        break
+      }
+    }
   }
 
   const fetchColleges = async () => {
@@ -199,15 +285,18 @@
     })
   }
 
-  onMount(async () => {
+  const mouted = async () => {
     await fetchColleges()
     await fetchCourses()
-  })
-  headerText.set('课程管理（管理员）')
+  }
+
+  $: $userInfo.id && mouted()
+  $: filter && fetchCourses()
+  $: headerText.set(`课程管理${$userInfo.role.name && `（${$userInfo.role.name}）`}`)
 </script>
 
 <svelte:head>
-  <title>课程管理（管理员）</title>
+  <title>课程管理{$userInfo.role.name && `（${$userInfo.role.name}）`}</title>
 </svelte:head>
 
 <Container>
@@ -222,7 +311,7 @@
             changeCourseModal.open('新建', 'success')
           }}
         >
-          <Icon name="calendar2-check" class="me-2" />
+          <Icon name="calendar2-plus" class="me-2" />
           新建课程
         </Button>
       {/if}
