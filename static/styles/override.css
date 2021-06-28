@@ -6,6 +6,10 @@
   margin-right: 0.75rem !important;
 }
 
+.p-2\.5 {
+  padding: 0.75rem !important;
+}
+
 .py-1\.5 {
   padding-top: 0.375rem !important;
   padding-bottom: 0.375rem !important;

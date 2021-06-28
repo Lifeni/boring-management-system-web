@@ -12,7 +12,7 @@
   import { writable } from 'svelte/store'
   import { Button, Col, Form, FormGroup, Icon, Input, Label, Row } from 'sveltestrap'
 
-  let students: Array<Array<string | number | Date>> = null
+  let students: Array<CourseArray> = null
 
   const removeStudentModal = createModal()
   const changeStudentModal = createModal()
@@ -135,14 +135,14 @@
 
   const fetchStudents = () => {
     get<IDataMessage<Array<IStudentResponse>>>('/api/students/').then((res) => {
-      students = res?.data.map((students) => [
-        students.userId.toString(),
-        students.userName,
-        students.sex,
-        new Date(students.birthYear),
-        new Date(students.grade),
-        students.collegeName,
-        students.collegeId.toString()
+      students = res?.data.map((student) => [
+        student.userId.toString(),
+        student.userName,
+        student.sex,
+        new Date(student.birthYear),
+        new Date(student.grade),
+        student.collegeName,
+        student.collegeId.toString()
       ])
     })
   }

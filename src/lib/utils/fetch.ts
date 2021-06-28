@@ -78,5 +78,14 @@ export const put = async <T, K>(url: string, body?: T): Promise<K> =>
     .then(handleResponse)
     .catch(handleError)
 
+export const patch = async <T, K>(url: string, body?: T): Promise<K> =>
+  fetch(url, {
+    method: 'PATCH',
+    body: JSON.stringify(body),
+    headers: { 'content-type': 'application/json' }
+  })
+    .then(handleResponse)
+    .catch(handleError)
+
 export const del = async <T>(url: string): Promise<T> =>
   fetch(url, { method: 'DELETE' }).then(handleResponse).catch(handleError)

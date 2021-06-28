@@ -5,16 +5,21 @@
   import Modal from '$lib/components/Modal.svelte'
   import { courseModel } from '$lib/stores/models'
   import { collegeList, createModal, headerText, toast, userInfo } from '$lib/stores/writable'
-  import { del, get, post, put } from '$lib/utils/fetch'
+  import { del, get, patch, post, put } from '$lib/utils/fetch'
+  import { dateFormat } from '$lib/utils/format'
   import { action, actionWrapper } from '$lib/utils/grid-actions'
-  import type { TCell } from 'gridjs/dist/src/types'
+  import type { TCell, TColumn } from 'gridjs/dist/src/types'
   import { writable } from 'svelte/store'
-  import { Button, Col, Form, FormGroup, Icon, Input, Label, Row } from 'sveltestrap'
+  import { Button, Col, Column, Form, FormGroup, Icon, Input, Label, Row, Table } from 'sveltestrap'
+  import Gridjs from 'gridjs-svelte'
+  import { gridOptions } from '$lib/stores/readable'
 
-  let courses: Array<Array<string | number | Date | boolean>> = null
+  let courses: Array<CourseArray> = null
+  let courseStudentList: Array<Array<string>> = null
 
   const removeCourseModal = createModal()
   const changeCourseModal = createModal()
+  const studentListCourseModal = createModal()
 
   const currentCourse = writable<CourseInfo>({ ...courseModel })
 
@@ -54,8 +59,10 @@
               text: '查看选课学生',
               icon: 'people',
               action: () => {
-                // setCurrentCourse(row)
-                // changeCourseModal.open('修改', 'primary')
+                const id = row.cells[0].data as string
+                fetchStudentList(id)
+                setCurrentCourse(row)
+                studentListCourseModal.open()
               },
               color: 'success'
             })
@@ -181,6 +188,13 @@
     currentCourse.set({ id, name, teacher, time, room, week, type, college, score })
   }
 
+  const studentListColumns = [
+    { name: 'ID', slug: 'id' },
+    { name: '姓名', slug: 'name' },
+    { name: '成绩', slug: 'mark' },
+    { name: '操作' }
+  ]
+
   const removeCourse = () => {
     del<IBaseMessage | boolean>(`/api/courses/${$currentCourse.id}/`).then((result) => {
       if (result) {
@@ -279,7 +293,7 @@
         break
       }
       case '1': {
-        const fetchUrl = `/api/courses/teacher/${user}/`
+        const fetchUrl = `/api/courses/teachers/${user}/`
         get<IDataMessage<Array<ICourseResponse>>>(fetchUrl).then((res) => {
           courses = res?.data.map((course) => [...list(course)])
         })
@@ -309,6 +323,30 @@
     get<IDataMessage<Array<ICollegeResponse>>>('/api/colleges/').then((res) => {
       collegeList.create(res?.data)
     })
+  }
+
+  const fetchStudentList = (id: string) => {
+    get<IDataMessage<Array<ICourseStudentListResponse>>>(`/api/courses/${id}/students/`).then(
+      (res) => {
+        courseStudentList = res?.data.map((student) => [
+          student.userId.toString(),
+          student.userName,
+          student.mark.toString(),
+          student.marked.toString()
+        ])
+      }
+    )
+  }
+
+  let markInput = {}
+
+  const markStudent = (id: string) => {
+    patch(`/api/courses/${$currentCourse.id}/students/${id}/mark/`, { mark: markInput[id] }).then(
+      () => {
+        fetchStudentList($currentCourse.id)
+      }
+    )
+    markInput[id] = ''
   }
 
   const mouted = async () => {
@@ -500,6 +538,57 @@
           {$changeCourseModal.type}
         </Button>
       </div>
+    </Modal>
+
+    <Modal isOpen={$studentListCourseModal.isOpen} toggle={studentListCourseModal.toggle} size="lg">
+      <div slot="header">课程「{$currentCourse.name}」的选课名单</div>
+      <div slot="body">
+        {#if courseStudentList && courseStudentList.length !== 0}
+          <Table bordered>
+            <thead>
+              <tr>
+                {#each studentListColumns as col}
+                  <th class="px-3">{col.name}</th>
+                {/each}
+              </tr>
+            </thead>
+            <tbody>
+              {#each courseStudentList as row}
+                <tr>
+                  {#each row as course, index}
+                    {#if index === row.length - 1}
+                      <td class="w-50 align-middle p-2.5">
+                        {#if course === 'true'}
+                          <Button color="primary" disabled>已打分</Button>
+                        {:else}
+                          <div class="d-flex align-items-center">
+                            <Input
+                              class="w-50 me-2.5"
+                              bind:value={markInput[row[0]]}
+                              type="number"
+                              placeholder="打分"
+                            />
+                            <Button
+                              color="primary"
+                              on:click={() => markStudent(row[0])}
+                              disabled={!markInput}
+                            >
+                              确定
+                            </Button>
+                          </div>
+                        {/if}
+                      </td>
+                    {:else}
+                      <td class="align-middle px-3">{course}</td>
+                    {/if}
+                  {/each}
+                </tr>
+              {/each}
+            </tbody>
+          </Table>
+        {/if}
+      </div>
+      <div slot="footer" />
     </Modal>
   {/if}
 </Container>

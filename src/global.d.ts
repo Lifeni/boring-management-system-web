@@ -36,6 +36,13 @@ interface IStudentCourseResponse extends ICourseResponse {
   mark: number
 }
 
+interface ICourseStudentListResponse {
+  userId: number
+  userName: string
+  mark: number
+  marked: boolean
+}
+
 interface IStudentResponse {
   userId: number
   userName: string
@@ -183,6 +190,13 @@ type CourseInfo = {
   score: string
 }
 
+type CourseStudentListInfo = {
+  id: number
+  name: string
+  mark: number
+  isMarked: boolean
+}
+
 type StudentCourseInfo = {
   id: string
   name: string
@@ -253,3 +267,5 @@ type Action = {
   disabled?: boolean
   bold?: boolean
 }
+
+type CourseArray = Array<string | number | Date | boolean>
