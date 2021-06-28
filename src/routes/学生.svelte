@@ -20,7 +20,7 @@
   const currentStudent = writable<StudentInfo>({ ...studentModel })
 
   const columns = [
-    { name: '学生 ID' },
+    { name: 'ID' },
     { name: '姓名' },
     { name: '性别' },
     { name: '生日', formatter: (cell: TCell) => dateFormat(new Date(cell.toString()), '-') },

@@ -6,7 +6,7 @@
   export let size: string = 'sm'
 </script>
 
-<Modal class="global-modal" {isOpen} {toggle} {size}>
+<Modal class="global-modal" {isOpen} {toggle} {size} scrollable>
   <ModalHeader {toggle}>
     <slot name="header" />
   </ModalHeader>

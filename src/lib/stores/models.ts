@@ -9,6 +9,18 @@ export const userModel: UserInfo = {
   role: roleModel
 }
 
+export const courseModel: CourseInfo = {
+  id: '',
+  name: '',
+  teacher: '',
+  time: '',
+  room: '',
+  week: '',
+  type: '',
+  college: '',
+  score: ''
+}
+
 export const collegeModel: CollegeInfo = {
   name: '',
   id: ''

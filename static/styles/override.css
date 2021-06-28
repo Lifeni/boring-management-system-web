@@ -56,9 +56,22 @@
 }
 
 .gridjs .gridjs-table {
-  width: 100%;
+  min-width: 100%;
+}
+
+.gridjs td.gridjs-td {
+  white-space: nowrap;
 }
 
 .modal-md {
   max-width: 450px !important;
+}
+
+.action-wrapper .btn:last-of-type {
+  margin-right: -0.625rem !important;
+}
+
+.gridjs .gridjs-th.gridjs-th-sort {
+  min-width: 6rem !important;
+  width: auto;
 }

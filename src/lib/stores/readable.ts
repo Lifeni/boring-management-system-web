@@ -8,7 +8,6 @@ export const gridOptions = readable({
   },
   search: true,
   sort: true,
-  resizable: true,
   width: '100%',
   autoWidth: true,
   language: {

@@ -20,7 +20,7 @@
   let currentUser = writable<UserInfo>(null)
 
   const columns = [
-    { name: '用户 ID' },
+    { name: 'ID' },
     { name: '用户名（学生或教师 ID）' },
     { name: '用户身份' },
     { name: '用户身份 ID', hidden: true },

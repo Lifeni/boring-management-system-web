@@ -20,7 +20,7 @@
   const currentTeacher = writable<TeacherInfo>({ ...teacherModel })
 
   const columns = [
-    { name: '教师 ID' },
+    { name: 'ID' },
     { name: '姓名' },
     { name: '性别' },
     { name: '生日', formatter: (cell: TCell) => dateFormat(new Date(cell.toString()), '-') },
@@ -143,16 +143,16 @@
 
   const fetchTeachers = () => {
     get<IDataMessage<Array<ITeacherResponse>>>('/api/teachers/').then((res) => {
-      teachers = res?.data.map((teachers) => [
-        teachers.userId.toString(),
-        teachers.userName,
-        teachers.sex,
-        new Date(teachers.birthYear),
-        teachers.degree,
-        teachers.title,
-        new Date(teachers.grade),
-        teachers.collegeName,
-        teachers.collegeId.toString()
+      teachers = res?.data.map((teacher) => [
+        teacher.userId.toString(),
+        teacher.userName,
+        teacher.sex,
+        new Date(teacher.birthYear),
+        teacher.degree,
+        teacher.title,
+        new Date(teacher.grade),
+        teacher.collegeName,
+        teacher.collegeId.toString()
       ])
     })
   }

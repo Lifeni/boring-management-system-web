@@ -52,7 +52,8 @@ body {
 .global-modal {
   z-index: 1800;
   width: 100vw;
-  height: 100%;
+  height: 100% !important;
+  padding: 2rem 0;
   margin: 0 auto !important;
   display: flex;
   align-items: center;

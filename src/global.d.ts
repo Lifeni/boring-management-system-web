@@ -16,6 +16,19 @@ interface IUserResponse {
   roleName: string
 }
 
+interface ICourseResponse {
+  courseId: number
+  courseName: string
+  teacherId: number
+  courseTime: string
+  classRoom: string
+  courseWeek: number
+  courseType: string
+  collegeId: number
+  collegeName: number
+  score: number
+}
+
 interface IStudentResponse {
   userId: number
   userName: string
@@ -100,6 +113,29 @@ interface IEditTeacherRequest {
   collegeId: number
 }
 
+interface IAddCourseRequest {
+  courseId: number
+  courseName: string
+  teacherId: number
+  courseTime: string
+  classRoom: string
+  courseWeek: number
+  courseType: string
+  collegeId: number
+  score: number
+}
+
+interface IEditCourseRequest {
+  courseName: string
+  teacherId: number
+  courseTime: string
+  classRoom: string
+  courseWeek: number
+  courseType: string
+  collegeId: number
+  score: number
+}
+
 type ModalStore = {
   subscribe: (this: void, run: Subscriber<Toast>, invalidate?: Invalidator<Toast>) => Unsubscriber
   toggle: () => void
@@ -121,6 +157,18 @@ type CollegeInfo = {
 type RoleInfo = {
   name: string
   id: string
+}
+
+type CourseInfo = {
+  id: string
+  name: string
+  teacher: string
+  time: string
+  room: string
+  week: string
+  type: string
+  college: string
+  score: string
 }
 
 type StudentInfo = {
