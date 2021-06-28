@@ -1,8 +1,8 @@
 import { h } from 'gridjs'
 import type { VNode } from 'preact'
 
-export const action = ({ action, color, text, icon, disabled }: Action): VNode => {
-  const className = `btn btn-${color} me-2.5`
+export const action = ({ action, color, text, icon, disabled, bold }: Action): VNode => {
+  const className = `btn btn-${color} me-2.5 ${bold ? 'fw-bold' : ''}`
   return h(
     'button',
     { onClick: action, className, disabled },

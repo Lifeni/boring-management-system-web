@@ -71,7 +71,6 @@
               action({
                 text: '已选',
                 icon: 'calendar2-check',
-                action: () => {},
                 color: 'success',
                 disabled: true
               })
@@ -83,7 +82,21 @@
               action({
                 text: '退选',
                 icon: 'calendar2-minus',
-                action: () => {},
+                action: () => {
+                  const id = row.cells[0].data as string
+                  const name = row.cells[1].data as string
+                  del<IBaseMessage | boolean>(`/api/courses/${id}/students/${$userInfo.id}/`).then(
+                    () => {
+                      fetchCourses()
+                      toast.open({
+                        title: '取消选课成功',
+                        body: `成功退选课程「${name}」`,
+                        color: 'success',
+                        type: 'ok'
+                      })
+                    }
+                  )
+                },
                 color: 'danger'
               })
             )
@@ -95,6 +108,18 @@
               icon: 'calendar2-check',
               action: () => {
                 const id = row.cells[0].data as string
+                const name = row.cells[1].data as string
+                put<null, IBaseMessage | boolean>(
+                  `/api/courses/${id}/students/${$userInfo.id}/`
+                ).then(() => {
+                  fetchCourses()
+                  toast.open({
+                    title: '选课成功',
+                    body: `成功选择课程「${name}」`,
+                    color: 'success',
+                    type: 'ok'
+                  })
+                })
               },
               color: 'success'
             })
@@ -130,7 +155,8 @@
                 action({
                   text: cell.toString(),
                   color: 'light',
-                  disabled: true
+                  disabled: true,
+                  bold: true
                 })
               )
             }
@@ -260,7 +286,7 @@
         break
       }
       case '2': {
-        const fetchUrl = `/api/courses/student/${user}/`
+        const fetchUrl = `/api/courses/students/${user}/`
         get<IDataMessage<Array<IStudentCourseResponse>>>(fetchUrl).then((res) => {
           courses = res?.data
             .map((course) => {

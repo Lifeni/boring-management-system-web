@@ -251,4 +251,5 @@ type Action = {
   text: string
   icon?: string
   disabled?: boolean
+  bold?: boolean
 }

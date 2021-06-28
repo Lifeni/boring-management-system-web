@@ -4,7 +4,14 @@ import { toast } from '../stores/writable'
 const handleResponse = async (res: Response) => {
   if (res.ok) {
     if (res.status === 200) return await res.json()
-    else return true
+    else if (res.status === 250) {
+      toast.open({
+        title: `请注意`,
+        body: ((await res.json()) as IBaseMessage).message,
+        color: 'warning',
+        type: 'info'
+      })
+    } else return true
   } else {
     switch (res.status) {
       case 401: {
@@ -62,7 +69,7 @@ export const post = async <T, K>(url: string, body: T): Promise<K> =>
     .then(handleResponse)
     .catch(handleError)
 
-export const put = async <T, K>(url: string, body: T): Promise<K> =>
+export const put = async <T, K>(url: string, body?: T): Promise<K> =>
   fetch(url, {
     method: 'PUT',
     body: JSON.stringify(body),
