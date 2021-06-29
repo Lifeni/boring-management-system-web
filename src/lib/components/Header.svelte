@@ -1,10 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { headerText, isLogged, userInfo } from '$lib/stores/writable'
-  import { post } from '$lib/utils/fetch'
+  import { createModal, headerText, isLogged, toast, userInfo } from '$lib/stores/writable'
+  import { del, post } from '$lib/utils/fetch'
   import { getNav } from '$lib/utils/nav-links'
   import {
+    Button,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -14,18 +15,33 @@
     NavItem,
     NavLink
   } from 'sveltestrap'
+  import Modal from './Modal.svelte'
 
   $: isCurrentPage = (url: string) =>
     decodeURIComponent($page.path + window.location.search).endsWith(url)
 
+  let removeUserModal = createModal()
+
   const handleLogout = () => {
-    post<ILogoutRequest, void>('/api/auth/logout', { id: Number($userInfo.id) })
-      .catch(() => {})
-      .finally(() => {
-        goto('/登录')
-        isLogged.logout()
-        userInfo.logout()
+    post('/api/auth/logout').then(() => {
+      goto('/登录')
+      isLogged.logout()
+      userInfo.logout()
+    })
+  }
+
+  const handleDeleteAccount = () => {
+    del(`/api/users/${$userInfo.id}/`).then(() => {
+      goto('/登录')
+      isLogged.logout()
+      userInfo.logout()
+      toast.open({
+        title: '删除账号成功',
+        body: 'See you again',
+        color: 'success',
+        type: 'ok'
       })
+    })
   }
 </script>
 
@@ -66,10 +82,19 @@
           ID {$userInfo.id} （{$userInfo.role.name}）
         </DropdownItem>
         <DropdownItem divider />
+
         <DropdownItem href="/修改密码">
           <Icon name="shield-lock" class="pe-2" />
           修改密码
         </DropdownItem>
+
+        {#if $userInfo.role.id !== '0'}
+          <DropdownItem on:click={() => removeUserModal.open()}>
+            <Icon name="trash2" class="pe-2" />
+            删除账号
+          </DropdownItem>
+        {/if}
+
         <DropdownItem on:click={handleLogout}>
           <Icon name="door-closed" class="pe-2" />
           退出登录
@@ -77,4 +102,15 @@
       </DropdownMenu>
     </Dropdown>
   {/if}
+
+  <Modal isOpen={$removeUserModal.isOpen} toggle={removeUserModal.toggle}>
+    <div slot="header">删除账号</div>
+    <div slot="body">
+      将会删除 <strong>{$userInfo.name}</strong> 的所有信息，此操作
+      <strong>不可撤销</strong>，请谨慎操作
+    </div>
+    <div slot="footer">
+      <Button color="danger" on:click={handleDeleteAccount}>删除</Button>
+    </div>
+  </Modal>
 </header>
