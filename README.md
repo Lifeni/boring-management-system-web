@@ -1,6 +1,6 @@
 # 一个教务管理系统的前端
 
-![GitHub](https://img.shields.io/github/license/Lifeni/boring-management-system-web)
+![GitHub](https://img.shields.io/github/license/Lifeni/boring-management-system-web?)
 
 来自软件架构课程设计，用 [SvelteKit](https://kit.svelte.dev/) + [Sveltestrap](https://sveltestrap.js.org/?path=/story/components--get-started) (Bootstrap 5) + [Grid.js](https://gridjs.io/) 实现。
 
