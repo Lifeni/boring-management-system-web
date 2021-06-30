@@ -1,6 +1,6 @@
 # 一个教务管理系统的前端
 
-![GitHub](https://img.shields.io/github/license/Lifeni/boring-management-system-web?)
+![GitHub](https://img.shields.io/github/license/Lifeni/boring-management-system-web)
 
 来自软件架构课程设计，用 [SvelteKit](https://kit.svelte.dev/) + [Sveltestrap](https://sveltestrap.js.org/?path=/story/components--get-started) (Bootstrap 5) + [Grid.js](https://gridjs.io/) 实现。
 
@@ -33,8 +33,6 @@ npm run preview
 ```
 
 推荐使用 Caddy 进行反向代理，避免跨域问题，详情见 [后端仓库的 README](https://github.com/Lifeni/boring-management-system#%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86) 。
-
-
 
 ## 开源协议
 

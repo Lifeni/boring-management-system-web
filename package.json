@@ -35,7 +35,6 @@
     "gridjs": "^5.0.2",
     "gridjs-svelte": "^1.2.0",
     "lodash": "^4.17.21",
-    "pattern.css": "^1.0.0",
     "sveltestrap": "^5.2.1"
   }
 }

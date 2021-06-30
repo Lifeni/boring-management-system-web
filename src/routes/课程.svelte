@@ -154,7 +154,7 @@
           {
             name: '成绩',
             hidden: filter !== '已修完课程',
-            formatter: (cell: TCell, row: Row) => {
+            formatter: (cell: TCell) => {
               return actionWrapper(
                 action({
                   text: cell.toString(),
